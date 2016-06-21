@@ -3,8 +3,9 @@
 class View
 {
 	private $workingFolder;
-	private $templatesRoot;
 	private $data;
+	private $templatesRoot = 'templates';
+	private $extension	= '.php';
 	public function __construct($workingFolder)
 	{	
 		$this->workingFolder = $workingFolder;
@@ -15,15 +16,18 @@ class View
 	}
 	public function get($name)
 	{
-		$value = $this->data[$name];/* don't understand need to use get method if we can transfer all array in view */
-		return $value;
+		if (!empty($this->data[$name])) {
+			$value = $this->data[$name];
+			return $value;
+		}
+		return false;
 	}
 	public function render($template)
 	{
 		ob_start();
 		extract($data);
-		if (file_exists($this->workingFolder . $template . '.html')) {
-			include_once $this->workingFolder . $template . '.html';
+		if (file_exists(APP . '/' . $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
+			include_once APP . '/' . $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}
 		echo ob_get_clean();
 	}
