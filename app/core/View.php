@@ -15,8 +15,7 @@ class View
 	}
 	public function get($name)
 	{
-		$value = $this->data[$name];/* не зовсім розумію сенс поверненя значення конкретної змінної
-									якщо в render можна передати весь массив */
+		$value = $this->data[$name];/* don't understand need to use get method if we can transfer all array in view */
 		return $value;
 	}
 	public function render($template)
