@@ -5,7 +5,7 @@ class View
 	private $workingFolder;
 	private $data;
 	private $templatesRoot = 'templates';
-	private $extension	= '.php';
+	private $extension = '.php';
 	public function __construct($workingFolder)
 	{	
 		$this->workingFolder = $workingFolder;
@@ -25,7 +25,7 @@ class View
 	public function render($template)
 	{
 		ob_start();
-		extract($data);
+		extract($this->$data);
 		if (file_exists(APP . '/' . $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
 			include_once APP . '/' . $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}
