@@ -1,9 +1,12 @@
 <?php
 
-require_once(APP . '/app/config/config.php');
+namespace app\app\core;
+
+use app\app\core\Config as Config;
 
 class MySQLDriver implements DatabaseInterface
 {
+	public $pdo;
 	public function __construct()
 	{
 		$this->connect();
@@ -12,9 +15,9 @@ class MySQLDriver implements DatabaseInterface
 	{
 		$this->disconnect();
 	}
-	public function connect($host, $user, $password, $dbname)
+	public function connect()
 	{
-		
+		$this->pdo = new PDO(Config::$dbConfig['dsn'], Config::$dbConfig['user'], Config::$dbConfig['password']);
 	}
 	public function executeQuery($sql)	
 	{
@@ -22,6 +25,6 @@ class MySQLDriver implements DatabaseInterface
 	}
 	public function disconnect($pdo)
 	{
-		
+		$this->pdo = null;
 	}
 }

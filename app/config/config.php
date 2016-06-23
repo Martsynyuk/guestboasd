@@ -2,10 +2,8 @@
 
 $settings = [
 	'database' => [
-			'driver' => 'mysql',
-			'host' => 'localhost',
-			'user' => 'admin',
-			'password' => '123456',
-			'dbname' => 'guestboard'
+	    'dsn' => 'mysql:host=localhost;dbname=guestboard;charset=utf8',
+		'user' => 'admin',
+		'password' => '123456'
 	],	
 ];

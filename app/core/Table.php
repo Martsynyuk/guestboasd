@@ -1,5 +1,7 @@
 <?php
 
+namespace \app\core;
+
 class Table extends MySQLDriver
 {
 	public $tableName;
