@@ -1,13 +1,13 @@
 <?php
 
-class Table
+class Table extends MySQLDriver
 {
-	private $tableName;
+	public $tableName;
 	public function __construct($tableName)
 	{
 		$this->tableName = $tableName;
 	}
-	public function get()
+	public function get($params = [])
 	{
 		
 	}
@@ -15,15 +15,15 @@ class Table
 	{
 		
 	}
-	public function insert()
+	public function insert($params = [])
 	{
 		
 	}
-	public function update()
+	public function update($params = [])
 	{
 		
 	}
-	public function delete()
+	public function delete($params = [])
 	{
 		
 	}

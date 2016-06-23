@@ -2,7 +2,7 @@
 
 interface DatabaseInterface
 {
-	public function connect();
-	public function executeQuery($sql, $params = array());
-	public function disconnect();
+	public function connect($host, $user, $password, $dbname);
+	public function executeQuery($sql);
+	public function disconnect($pdo);
 }

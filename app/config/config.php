@@ -2,10 +2,10 @@
 
 $settings = [
 	'database' => [
-			'driver' => 'DRIVER_NAME',
+			'driver' => 'mysql',
 			'host' => 'localhost',
-			'user' => 'USER_NAME',
+			'user' => 'admin',
 			'password' => '123456',
-			'dbname' => 'DATABASE_NAME'
+			'dbname' => 'guestboard'
 	],	
 ];
