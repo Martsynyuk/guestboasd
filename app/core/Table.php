@@ -2,29 +2,31 @@
 
 class Table extends MySQLDriver
 {
-	public $tableName;
-	public function __construct($tableName)
-	{
-		$this->tableName = $tableName;
-	}
-	public function get($params = [])
+	public function __construct()
 	{
 		
 	}
-	public function getAll()
+	public function get($conditions, $table, $params = [])
+	{
+		return $this->action('SELECT' . $conditions, $table, $params);
+	}
+	public function getAll($table, $params = [])
+	{
+		return $this->action('SELECT *', $table, $params);
+	}
+	public function insert($conditions, $table, $params = [])
 	{
 		
 	}
-	public function insert($params = [])
+	public function update($conditions, $table, $params = [])
 	{
 		
 	}
-	public function update($params = [])
+	public function delete($table, $params = [])
 	{
-		
-	}
-	public function delete($params = [])
-	{
-		
+		if($this->action('DELETE FROM', $table, $params)) {
+			return true;
+		}
+		return false;
 	}
 }
