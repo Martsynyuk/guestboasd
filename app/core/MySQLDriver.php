@@ -1,13 +1,14 @@
 <?php
 
-namespace app\app\core;
-
-use app\app\core\Config as Config;
-
 class MySQLDriver implements DatabaseInterface
 {
-	public $pdo;
-	public function __construct()
+	private static $instance = null;
+	private $error = false;
+	private $count = 0;
+	private $query;
+	private $result;
+	private $pdo;
+	private function __construct()
 	{
 		$this->connect();
 	}
@@ -17,14 +18,25 @@ class MySQLDriver implements DatabaseInterface
 	}
 	public function connect()
 	{
-		$this->pdo = new PDO(Config::$dbConfig['dsn'], Config::$dbConfig['user'], Config::$dbConfig['password']);
+		try {
+			$this->pdo = new PDO(Config::get('database/dsn'), Config::get('database/user'), Config::get('database/password'));
+		} catch(PDOException $e) {
+			die($e->getMessage());
+		}
 	}
-	public function executeQuery($sql)	
+	public function executeQuery($sql, $params = [])	
 	{
-		
+
 	}
-	public function disconnect($pdo)
+	public function disconnect()
 	{
 		$this->pdo = null;
+	}
+	public static function getInstance()
+	{
+		if(!isset(self::$instance)) {
+			self::$instance = new MySQLDriver();
+		}
+		return self::$instance;
 	}
 }

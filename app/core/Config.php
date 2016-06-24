@@ -1,10 +1,22 @@
 <?php
 
-namespace app\app\core;
-
-require_once(APP . '/app/config/config.php');
+require_once('app/config/config.php');
 
 class Config
 {
-	public static $dbConfig = $settings['database'] ;
+	public static function get($path = null)
+	{
+		if($path) {
+			$config = $GLOBALS;
+			$path = explode('/', $path);
+
+			foreach($path as $value) {
+				if(isset($config[$value])) {
+					$config = $config[$value];
+				}
+			}
+			return $config;
+		}
+		return false;
+	}	
 }

@@ -3,6 +3,6 @@
 interface DatabaseInterface
 {
 	public function connect();
-	public function executeQuery($sql);
-	public function disconnect($pdo);
+	public function executeQuery($sql, $params = []);
+	public function disconnect();
 }
