@@ -1,15 +1,13 @@
 <?php
 
-require_once('app/config/config.php');
-
-class Config
+abstract class Config
 {
 	public static function get($path = null)
-	{
+	{	
 		if($path) {
-			$config = $GLOBALS;
+			$config = require_once('app/config/config.php');
 			$path = explode('/', $path);
-
+			
 			foreach($path as $value) {
 				if(isset($config[$value])) {
 					$config = $config[$value];

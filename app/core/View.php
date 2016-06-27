@@ -26,8 +26,8 @@ class View
 	{
 		ob_start();
 		extract($this->$data);
-		if (file_exists(APP . '/' . $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
-			include_once APP . '/' . $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
+		if (file_exists($this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
+			include_once $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}
 		echo ob_get_clean();
 	}

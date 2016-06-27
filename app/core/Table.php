@@ -1,30 +1,33 @@
 <?php
 
-class Table extends MySQLDriver
+abstract class Table
 {
+	protected $driver;
+	protected $table;
 	public function __construct()
 	{
-		
+		$this->driver = Config::get('database/driver') . 'Driver';
+		$this->driver = new $this->driver();
 	}
-	public function get($conditions, $table, $params = [])
+	public function get($conditions, $params = [])
 	{
-		return $this->action('SELECT' . $conditions, $table, $params);
+		return $this->driver->action('SELECT' . $conditions, $this->table, $params);
 	}
-	public function getAll($table, $params = [])
+	public function getAll($params = [])
 	{
-		return $this->action('SELECT *', $table, $params);
+		return $this->driver->action('SELECT *', $this->table, $params);
 	}
-	public function insert($conditions, $table, $params = [])
-	{
-		
-	}
-	public function update($conditions, $table, $params = [])
+	public function insert($conditions, $params = [])
 	{
 		
 	}
-	public function delete($table, $params = [])
+	public function update($conditions, $params = [])
 	{
-		if($this->action('DELETE FROM', $table, $params)) {
+		
+	}
+	public function delete($params = [])
+	{
+		if($this->driver->action('DELETE', $params)) {
 			return true;
 		}
 		return false;

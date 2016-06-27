@@ -19,7 +19,8 @@ class MySQLDriver implements DatabaseInterface
 	public function connect()
 	{
 		try {
-			$this->pdo = new PDO(Config::get('database/dsn'), Config::get('database/user'), Config::get('database/password'));
+			$dsn = 'mysql:host=' . Config::get('database/host') . ';dbname=' . Config::get('database/dbname') . ';charset=utf8';
+			$this->pdo = new PDO($dsn, Config::get('database/user'), Config::get('database/password'));
 		} catch(PDOException $e) {
 			die($e->getMessage());
 		}
