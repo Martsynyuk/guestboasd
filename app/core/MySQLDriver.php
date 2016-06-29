@@ -99,7 +99,7 @@ class MySQLDriver implements DatabaseInterface
 			{
 				$updateData = $updateData . $key = $val . ',';
 			}
-			$sql = '"' . $action . $table . 'SET' . $updateData . 'WHERE' . $where[0] . $where[1] . '?' . '"';
+			$sql = '"' . $action . $table . 'SET' . rtrim(',', $updateData) . 'WHERE' . $where[0] . $where[1] . '?' . '"';
 			if(!$this->executeQuery($sql, $where[2])) {
 				return true;
 			}
