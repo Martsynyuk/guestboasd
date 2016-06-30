@@ -26,14 +26,13 @@ class Table
 		if(count($data)) {
 			$column = '';
 			$string = '';
-			$value = array_values($data);
 			foreach($data as $key => $val)
 			{
 				$column = $column . $key . ', ';
 				$string = $string . '?' . ', ';
 			}
-			$sql = '"' . 'INSERT INTO' . $table . '(' . rtrim(', ', $column) . ')' . 'VALUES' . '(' . rtrim(', ', $value) . ')' . '"';
-			if(!$this->driver->executeQuery($sql)) {
+			$sql = '"' . 'INSERT INTO' . $table . '(' . rtrim(', ', $column) . ')' . 'VALUES' . '(' . rtrim(', ', $string) . ')' . '"';
+			if(!$this->driver->executeQuery($sql, array_values($data))) {
 				return true;
 			}
 		}
