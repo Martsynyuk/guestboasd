@@ -40,13 +40,13 @@ class MySQLDriver implements DatabaseInterface
 					$this->query->bindValue($index, $value);
 					$index++;
 				}
-			}
-			if($this->query->execute()) {
-				$this->result = $this->query->fetchAll(PDO::FETCH_ASSOC);
-				$this->count = $this->query->rowCount();
-			} else {
-				$this->error = true;
-				return false;
+				if($this->query->execute()) {
+					$this->result = $this->query->fetchAll(PDO::FETCH_ASSOC);
+					$this->count = $this->query->rowCount();
+				} else {
+					$this->error = true;
+					return false;
+				}
 			}
 		}
 		return $this;

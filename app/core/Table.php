@@ -27,9 +27,9 @@ class Table
 			$string = '';
 			foreach($data as $val)
 			{
-				$string = $string . '?' . ', ';
+				$string .= '?' . ', ';
 			}
-			$sql = '"' . 'INSERT INTO' . $table . '(' . implode(', ', array_keys($data)) . ')' . 'VALUES' . '(' . rtrim(', ', $string) . ')' . '"';
+			$sql = '"' . 'INSERT INTO' . $table . '(\'' . implode('\', \'', array_keys($data)) . ')\'' . 'VALUES' . '(' . rtrim(', ', $string) . ')' . '"';
 			if(!$this->driver->executeQuery($sql, array_values($data))) {
 				return true;
 			}
@@ -45,7 +45,7 @@ class Table
 			$updateData = '';
 			foreach($data as $key => $val)
 			{
-				$updateData = $updateData . $key = $val . ',';
+				$updateData .= $key = $val . ',';
 			}
 			$sql = '"' . 'UPDATE' . $table . 'SET' . rtrim(',', $updateData) . 'WHERE' . $filds . $operators . '?' . '"';
 			if(!$this->driver->executeQuery($sql, $value)) {
