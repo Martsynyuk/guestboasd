@@ -26,12 +26,11 @@ class Table
 		if(count($data)) {
 			$column = '';
 			$string = '';
-			$value = '';
+			$value = array_values($data);
 			foreach($data as $key => $val)
 			{
 				$column = $column . $key . ', ';
 				$string = $string . '?' . ', ';
-				$value [] = $val;
 			}
 			$sql = '"' . 'INSERT INTO' . $table . '(' . rtrim(', ', $column) . ')' . 'VALUES' . '(' . rtrim(', ', $value) . ')' . '"';
 			if(!$this->driver->executeQuery($sql)) {
