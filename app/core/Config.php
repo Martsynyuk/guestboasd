@@ -2,10 +2,17 @@
 
 abstract class Config
 {
+	public static $config;
+	public static function set($settings = [])
+	{
+		if(is_array($settings)) {
+			self::$config = $settings;
+		}
+	}
 	public static function get($path = null)
 	{	
 		if($path) {
-			$config = require_once('app/config/config.php');
+			$config = self::$config;
 			$path = explode('/', $path);
 			
 			foreach($path as $value) {

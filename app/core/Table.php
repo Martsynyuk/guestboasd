@@ -1,6 +1,6 @@
 <?php
 
-abstract class Table
+class Table
 {
 	protected $driver;
 	protected $table;
@@ -13,27 +13,74 @@ abstract class Table
 	 * @param $conditions - must be string 
 	 * @param array $params
 	*/
-	public function get($conditions, $params = [])  //  +
+	public function get($conditions, $params = [])
 	{
-		return $this->driver->action('SELECT' . $conditions, $this->table, $params);
+		return $this->select('SELECT' . $conditions, $params);
 	}
-	public function getAll($params = [])  //  +
+	public function getAll($params = [])
 	{
-		return $this->driver->action('SELECT *', $this->table, $params);
+		return $this->select('SELECT *', $params);
 	}
 	public function insert($data = [])
 	{
-		return $this->driver->insert('INSERT INTO', $this->table, $data);
+		if(count($data)) {
+			$column = '';
+			$string = '';
+			$value = '';
+			foreach($data as $key => $val)
+			{
+				$column = $column . $key . ', ';
+				$string = $string . '?' . ', ';
+				$value [] = $val;
+			}
+			$sql = '"' . 'INSERT INTO' . $table . '(' . rtrim(', ', $column) . ')' . 'VALUES' . '(' . rtrim(', ', $value) . ')' . '"';
+			if(!$this->driver->executeQuery($sql)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public function update($data = [], $where = [])
 	{
-		return $this->driver->update('UPDATE', $this->table, $data, $where);
-	}
-	public function delete($params = [])  // +
-	{
-		if($this->driver->action('DELETE', $this->table, $params)) {
-			return true;
+		if(count($data) && count($where) === 3) {
+			$filds = $where[0];
+			$operators = $where[1];
+			$value = $where[2];
+			$updateData = '';
+			foreach($data as $key => $val)
+			{
+				$updateData = $updateData . $key = $val . ',';
+			}
+			$sql = '"' . 'UPDATE' . $table . 'SET' . rtrim(',', $updateData) . 'WHERE' . $filds . $operators . '?' . '"';
+			if(!$this->driver->executeQuery($sql, $value)) {
+				return true;
+			}
 		}
 		return false;
+	}
+	public function delete($params = []) 
+	{
+		if($this->action('DELETE', $params)) {
+			return true;	
+		}
+		return false;
+	}
+	public function action($action, $params = [])
+	{
+		if(count($where === 3)) {
+			$filds = $where[0];
+			$operators = $where[1];
+			$value = $where[2];
+			$sql = "$action FROM $this->$table WHERE $filds $operators ?";
+	
+			if(!$this->driver->executeQuery($sql, $value)) {
+				return $this;
+			}
+		}
+		return false;
+	}
+	public function query($sql)
+	{
+		return $this->driver->executeQuery($sql);
 	}
 }

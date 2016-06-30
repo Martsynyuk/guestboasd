@@ -8,7 +8,7 @@ class MySQLDriver implements DatabaseInterface
 	private $query;
 	private $result;
 	private $pdo;
-	private function __construct()
+	public function __construct()
 	{
 		$this->connect();
 	}
@@ -50,67 +50,5 @@ class MySQLDriver implements DatabaseInterface
 			}
 		}
 		return $this;
-	}
-	/**
-	 * 
-	 *  @param array $where - condition, example ['id', '=', '0'] 
-	 */
-	public function action($action, $table, $where = [])
-	{
-		if(count($where === 3)) {			
-			$sql = "$action FROM $table WHERE $where[0] $where[1] ?";
-				
-			if(!$this->executeQuery($sql, $where[2])) {
-				return $this;
-			}
-		}
-		return false;
-	}
-	/**
-	 * 
-	 */
-	public function insert($action, $table, $data = [])
-	{
-		if(count($data)) {
-			$column = '';
-			$value = '';
-			foreach($data as $key => $val)
-			{
-				$column = $column . $key . ', ';
-				$value = $value . $val . ', ';
-			}
-			$sql = '"' . $action . $table . '(' . rtrim(', ', $column) . ')' . 'VALUES' . '(' . rtrim(', ', $value) . ')' . '"';
-			if(!$this->executeQuery($sql)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	/**
-	 * 
-	 * @param array $data - data for update, ['column' => 'value']
-	 * @param array $where - condition for update, example ['id', '=', '12'] 
-	 */
-	public function update($action, $table, $data = [], $where = [])
-	{
-		if(count($data) && count($where) === 3) {
-			$updateData = '';
-			foreach($data as $key => $val)
-			{
-				$updateData = $updateData . $key = $val . ',';
-			}
-			$sql = '"' . $action . $table . 'SET' . rtrim(',', $updateData) . 'WHERE' . $where[0] . $where[1] . '?' . '"';
-			if(!$this->executeQuery($sql, $where[2])) {
-				return true;
-			}
-		}
-		return false;
-	}
-	public function result()
-	{
-		return $this->result;
-	}
-	public function error() {
-		return $this->error;
 	}
 }
