@@ -5,7 +5,7 @@ class MySQLDriver implements DatabaseInterface
 	private static $instance = null;
 	private $error = false;
 	private $count = 0;
-	private $query;
+	private $_query;
 	private $result;
 	private $pdo;
 	public function __construct()

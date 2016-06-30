@@ -23,5 +23,6 @@ spl_autoload_register(function($file) {
 		}
 	}
 });
-return $settings;
+
+Config::set($settings);
 

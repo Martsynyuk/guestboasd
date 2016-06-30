@@ -24,14 +24,12 @@ class Table
 	public function insert($data = [])
 	{
 		if(count($data)) {
-			$column = '';
 			$string = '';
-			foreach($data as $key => $val)
+			foreach($data as $val)
 			{
-				$column = $column . $key . ', ';
 				$string = $string . '?' . ', ';
 			}
-			$sql = '"' . 'INSERT INTO' . $table . '(' . rtrim(', ', $column) . ')' . 'VALUES' . '(' . rtrim(', ', $string) . ')' . '"';
+			$sql = '"' . 'INSERT INTO' . $table . '(' . implode(', ', array_keys($data)) . ')' . 'VALUES' . '(' . rtrim(', ', $string) . ')' . '"';
 			if(!$this->driver->executeQuery($sql, array_values($data))) {
 				return true;
 			}
@@ -79,6 +77,6 @@ class Table
 	}
 	public function query($sql)
 	{
-		return $this->driver->executeQuery($sql);
+		return $this->driver->pdo->query($sql);
 	}
 }
