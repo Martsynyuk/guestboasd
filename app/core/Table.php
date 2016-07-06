@@ -3,141 +3,120 @@
 class Table
 {
 	protected $db;
-	public function __construct()
-	{
-		$this->db = Config::get('database/driver') . 'Driver';
-		$this->db = new $this->db();
-	}
 	/**
-	 * @param array $fields = [
-	 * 					'name',
-	 * 					'age',
-	 * 					etc...
-	 * ]
 	 * @param array $where = [
-	 * 					'where' => [
 	 * 						'id' => ['=', '3']
 	 * 				],
-	 * 					'limit' => [0, 5],
+	 * 					'limit' => [0, 5], or [5]
 	 * 					'orderBy' => [
 	 * 							'field'	or 'field DESC'
 	 * 				],
 	 * ]
-	*/
-	public function get($fields = [], $where = [])
+	 */
+
+	public function __construct()
+	{
+		$driverName = Config::get('database/driver') . 'Driver';
+		$this->db = new $this->$driverName();
+	}
+
+	public function get($table, $where, $limit = [], $order = [])
+	{
+		$result = [];
+		if($this->action("SELECT *", $table, $where, $limit, $order)){
+			$result = $this->db->getResults();
+		}
+		return $result;
+	}
+
+	public function getAll($table)
+	{
+		$result = [];
+		$sql = "SELECT * FROM $table";
+		if($this->db->executeQuery($sql)){
+			$result = $this->db->getResults();
+		}
+		return $result;
+	}
+
+	public function delete($table, $where)
+	{
+		return $this->action("DELETE", $table, $where);
+	}
+
+	public function insert($table, $data)
 	{	
-		if(count($fields)) {
-			if(!is_array($where)) {
-				$where = null;
-			}
-			$action = 'SELECT ' . implode(', ', $fields) . 'FROM';
-			return $this->action($action, $this->table, $where);
+		if(empty($data)) {
+			return false;	
+		}	
+		$value = '';
+		
+		foreach($data as $val)
+		{
+			$value .= '?' . ', ';
 		}
-		return false;
+		$sql = "INSERT INTO $table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($value, ', ') . ")";
+		return $this->db->executeQuery($sql, $data);
 	}
-	public function getAll($where = [])
+
+	public function update($table, $data, $where)
 	{
-		if(!is_array($where)) {
-			$where = null;
+		if(empty($data) || empty($where)) {
+			return false;	
 		}
-		return $this->action('SELECT * FROM', $this->table, $where);
+		$condition = $this->conditions($where);	
+		list($conditions, $values) = $condition;
+	
+		$set = '';
+		foreach($data as $key => $val)
+		{
+			$set .= $key . '= ?,';
+		}
+		
+		$data = array_merge($data, $values);
+		$sql = "UPDATE $table SET " . rtrim($set, ',') . "$conditions";
+		return $this->db->executeQuery($sql, $data);
 	}
-	public function insert($data = [])
+
+	private function action($action, $table, $where, $limit = [], $order = [])
 	{
-		if(count($data)) {
-			$string = '';
-			foreach($data as $val)
-			{
-				$string .= '?' . ', ';
-			}
-			$sql = "INSERT INTO $this->table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($string, ', ') . ")";
-			return $sql;
-			if(!$this->db->executeQuery($sql, array_values($data))) {
-				return true;
-			}
+		$condition = $this->conditions($where);
+		$limitStr = '';
+		$orderStr = '';		
+		list($conditions, $values) = $condition;
+		
+		if(in_array(count($limit), [1, 2])){
+			$limitStr = 'LIMIT ' . implode(', ', $limit);
 		}
-		return false;
+
+		if(!empty($order)){
+			$orderStr = 'ORDER BY ' . implode(', ', $order);
+		}
+
+		$sql = "$action FROM $table WHERE $conditions $orderStr $limitStr";
+		return $this->db->executeQuery($sql, $values);
 	}
-	public function delete($where = [])
+
+	private function conditions($where)
 	{
-		if(is_array($where)) {
-			if(!$this->action('DELETE FROM', $this->table, $where)) {
-				return true;
+		if(empty($where)) {
+			return [$conditions = '', $values = []];
+		}
+		$operations = ['=', '>', '<', '>=', '<='];
+		$conditions = [];
+		$values = [];
+		
+		foreach ($where as $key => $value){
+			if(count($value) !== 2){
+				return false;
+			}
+			if(in_array($value[0], $operations)){
+				$conditions[] = $key . $value[0] . "?";
+				$values[] = $value[1];
 			}
 		}
-		return false;
-	}
-	public function action($action, $table, $where = [])
-	{	
-		if(where) {
-			$where = $this->conditions($where);
-			$data = $where[1];
-			$where = $where[0];
-		} else {
-			$where = '';
-			$data = null;
-		}
-		$sql = "$action $table $where";
-		if(!$this->db->executeQuery($sql, $data)) {
-			return $this->db;
-		}
-		return false;
-	}
-	public function update($data = [], $where = [])
-	{
-		if(count($data)) {
-			if(!is_array($where)) {
-				$where = '';
-				$dataCondition = null;
-			} else {
-				$where = $this->conditions($where);
-				$dataCondition = $where[1];
-				$where = $where[0];
-			}
-			$updateData = '';
-			foreach($data as $key => $val)
-			{
-				$updateData .= $key . '=?,';
-			}
-			if(!$dataCondition) {
-				$data = array_merge($data, $dataCondition);
-			}
-			$data = array_values($data);
-			$sql = "UPDATE $this->table SET " . rtrim($updateData, ',' . "$where");
-			if(!$this->db->executeQuery($sql, $data)) {
-				return true;
-			}
-		}
-		return false;
-	}
-	public function conditions($where = [])
-	{
-		if(count($where['limit'])) {
-			$limit = " LIMIT " . $where['limit'][0] . ',' . $where['limit'][1] . "";
-		} else {
-			$limit = '';
-		}
-		if($where['orderBy']) {
-			foreach($where['orderBy'] as $field)
-			{
-				$orderBy = " ORDER BY $field";
-			}
-		} else {
-			$orderBy = '';
-		}
-		if(count($where['where'])) {
-			$data = null;
-			foreach($where['where'] as $field => $value)
-			{
-				$condition = $field . $value[0] . '?';
-				$conditions[] = $condition;
-				$data[] = $value[1];
-			}
-			$conditions = ' WHERE ' . implode(' AND ', $condition);
-		} else {
-			$conditions = '';
-		}
-		$where = $conditions . $orderBy . $limit;
-		return [$where, $data];
+		$conditions = implode(' AND ', $conditions);
+		
+		return [$conditions, $values];
 	}
 }
