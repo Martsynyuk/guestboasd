@@ -6,18 +6,23 @@ class Controller
 	public $uses = [];
 	public $params = [];
 	
-	public function __construct($controller, $params)
+	public function __construct($controller, $params = [])
 	{
 		$this->params = $params;
 		$this->view = new View($controller);		
-		$this->setModels();
+		$this->setModels($controller);
 	}
 	
-	public function setModels()
+	public function setModels($controller)
 	{
-		foreach($this->uses as $class)
-		{
-			$this->$class = new $class();
+		if(empty($this->uses)) {
+			$controllers = $controller . 'Model';
+			$this->$controllers = new $controllers();
+		} else {
+			foreach($this->uses as $class)
+			{
+				$this->$class = new $class();
+			}	
 		}
 	}
 	

@@ -3,7 +3,7 @@
 class View
 {
 	private $workingFolder;
-	private $data;
+	private $data = [];
 	private $templatesRoot = 'templates';
 	private $extension = '.php';
 	public function __construct($workingFolder)
@@ -25,7 +25,7 @@ class View
 	public function render($template)
 	{
 		ob_start();
-		extract($this->$data);
+		extract($this->data);
 		if (file_exists($this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
 			include_once $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}

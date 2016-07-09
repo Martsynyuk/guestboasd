@@ -10,9 +10,9 @@ $settings = [
 		'password' => ''
 	],
 	'router' =>[
-		'defaultController' => 'PostController',
-		'defaultAction' => 'actionIndex',
-		'defaultErrorAction' => 'actionError'
+		'defaultController' => 'Post',
+		'defaultAction' => 'index',
+		'defaultErrorAction' => 'error'
 	]
 ];
 
@@ -20,7 +20,8 @@ spl_autoload_register(function($file) {
 	$paths = [
 			'app/core/',
 			'app/interfaces/',
-			'app/models/'
+			'app/models/',
+			'app/controllers/'
 	];
 
 	foreach ($paths as $path)

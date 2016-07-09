@@ -3,7 +3,7 @@
 class PostController extends Controller
 {
 	public $uses = [
-		'Post'
+		'PostModel'
 	];
 	
 	public function actionCreate()

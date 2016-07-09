@@ -17,7 +17,7 @@ class Table
 	public function __construct()
 	{
 		$driverName = Config::get('database/driver') . 'Driver';
-		$this->db = new $this->$driverName();
+		$this->db = new $driverName();
 	}
 
 	public function get($table, $where, $limit = [], $order = [])
