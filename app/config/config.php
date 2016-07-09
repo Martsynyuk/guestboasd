@@ -8,12 +8,19 @@ $settings = [
 		'dbname' => 'user',
 		'user' => 'root',
 		'password' => ''
+	],
+	'router' =>[
+		'defaultController' => 'PostController',
+		'defaultAction' => 'actionIndex',
+		'defaultErrorAction' => 'actionError'
 	]
 ];
+
 spl_autoload_register(function($file) {
 	$paths = [
 			'app/core/',
-			'app/interfaces/'
+			'app/interfaces/',
+			'app/models/'
 	];
 
 	foreach ($paths as $path)
