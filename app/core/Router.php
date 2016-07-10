@@ -23,8 +23,8 @@ class Router
 			$controller = $this->controller . 'Controller';
 			$controller = new $controller($this->controller, $this->params);
 			
-			if(method_exists($controller, 'action' . $this->action)) {
-				$action = 'action' . $this->action;
+			if(method_exists($controller, 'action' . ucfirst($this->action))) {
+				$action = 'action' . ucfirst($this->action);
 				$controller->$action();
 				$controller->display($this->action);
 				
@@ -45,7 +45,7 @@ class Router
 		
 		if(count($url) >= 2) {
 			list($this->controller, $this->action) = $url;
-			$this->params = array_slice($url, 3);
+			$this->params = array_slice($url, 2);
 		}	
 		$this->run();
 	}
