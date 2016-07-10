@@ -20,31 +20,31 @@ class Table
 		$this->db = new $driverName();
 	}
 
-	public function get($table, $where, $limit = [], $order = [])
+	public function get($where, $limit = [], $order = [])
 	{
 		$result = [];
-		if($this->action("SELECT *", $table, $where, $limit, $order)){
+		if($this->action("SELECT *", $this->table, $where, $limit, $order)){
 			$result = $this->db->getResults();
 		}
 		return $result;
 	}
 
-	public function getAll($table)
+	public function getAll()
 	{
 		$result = [];
-		$sql = "SELECT * FROM $table";
+		$sql = "SELECT * FROM $this->table";
 		if($this->db->executeQuery($sql)){
 			$result = $this->db->getResults();
 		}
 		return $result;
 	}
 
-	public function delete($table, $where)
+	public function delete($where)
 	{
-		return $this->action("DELETE", $table, $where);
+		return $this->action("DELETE", $this->table, $where);
 	}
 
-	public function insert($table, $data)
+	public function insert($data)
 	{	
 		if(empty($data)) {
 			return false;	
@@ -55,11 +55,11 @@ class Table
 		{
 			$value .= '?' . ', ';
 		}
-		$sql = "INSERT INTO $table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($value, ', ') . ")";
+		$sql = "INSERT INTO $this->table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($value, ', ') . ")";
 		return $this->db->executeQuery($sql, $data);
 	}
 
-	public function update($table, $data, $where)
+	public function update($data, $where)
 	{
 		if(empty($data) || empty($where)) {
 			return false;	
@@ -74,7 +74,7 @@ class Table
 		}
 		
 		$data = array_merge($data, $values);
-		$sql = "UPDATE $table SET " . rtrim($set, ',') . "$conditions";
+		$sql = "UPDATE $this->table SET " . rtrim($set, ',') . "$conditions";
 		return $this->db->executeQuery($sql, $data);
 	}
 

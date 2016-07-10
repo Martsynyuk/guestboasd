@@ -6,26 +6,26 @@ class PostModel extends Table
 	
 	public function get($where, $limit = [], $orderBy = [])
 	{
-		return parent::get($this->table, $where, $limit, $orderBy);
+		return parent::get($where, $limit, $orderBy);
 	}
 	
 	public function getAll()
 	{
-		return parent::getAll($this->table);
+		return parent::getAll();
 	}
 	
 	public function delete($where)
 	{
-		return parent::delete($this->table, $where);
+		return parent::delete($where);
 	}
 	
 	public function insert($data)
 	{
-		return parent::insert($this->table, $data);
+		return parent::insert($data);
 	}
 	
 	public function update($data, $where)
 	{
-		return parent::update($this->table, $data, $where);
+		return parent::update($data, $where);
 	}
 }

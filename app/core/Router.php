@@ -5,9 +5,9 @@ class Router
 	private $defaultController;
 	private $defaultAction;
 	private $defaultErrorAction;
-	public $controller = null;
-	public $action = null;
-	public $params = [];
+	private $controller = null;
+	private $action = null;
+	private $params = [];
 	
 	public function __construct($url)
 	{	
@@ -36,7 +36,7 @@ class Router
 		}
 	}
 	
-	public function urlParser($url)
+	private function urlParser($url)
 	{
 		$url = explode('/', ltrim($url, '/'));
 		
@@ -50,7 +50,7 @@ class Router
 		$this->run();
 	}
 	
-	public function error($error)
+	private function error($error)
 	{
 		$controller = $this->defaultController . 'Controller';
 		$action = 'action' . ucfirst($this->defaultErrorAction);
