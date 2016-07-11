@@ -9,12 +9,12 @@ class Router
 	private $action = null;
 	private $params = [];
 	
-	public function __construct($url)
+	public function __construct()
 	{	
 		$this->defaultController = Config::get('router/defaultController');
 		$this->defaultAction = Config::get('router/defaultAction');
 		$this->defaultErrorAction = Config::get('router/defaultErrorAction');
-		$this->urlParser($url);
+		$this->urlParser();
 	}
 	
 	public function run()
@@ -36,14 +36,16 @@ class Router
 		}
 	}
 	
-	private function urlParser($url)
+	private function urlParser()
 	{
-		$url = explode('/', ltrim($url, '/'));
+		$url = explode('/', ltrim($_SERVER ['REQUEST_URI'], '/'));
 		
 		$this->controller = $this->defaultController;
 		$this->action = $this->defaultAction;
 		
-		if(count($url) >= 2) {
+		if(count($url) == 1 && $url[0] != '') {
+			list($this->controller) = $url;
+		} elseif(count($url) >= 2) {
 			list($this->controller, $this->action) = $url;
 			$this->params = array_slice($url, 2);
 		}	

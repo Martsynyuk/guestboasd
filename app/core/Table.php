@@ -53,7 +53,7 @@ class Table
 		
 		foreach($data as $val)
 		{
-			$value .= '?' . ', ';
+			$value .= '?, ';
 		}
 		$sql = "INSERT INTO $table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($value, ', ') . ")";
 		return $this->db->executeQuery($sql, $data);
@@ -73,7 +73,7 @@ class Table
 			$set .= $key . '= ?,';
 		}
 		
-		$data = array_merge($table, $data, $values);
+		$data = array_merge($data, $values);
 		$sql = "UPDATE $table SET " . rtrim($set, ',') . "$conditions";
 		return $this->db->executeQuery($sql, $data);
 	}

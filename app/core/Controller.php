@@ -19,9 +19,11 @@ class Controller
 			$controllers = $controller . 'Model';
 			$this->$controllers = new $controllers();
 		} else {
-			foreach($this->uses as $class)
+			foreach($this->uses as $className)
 			{
-				$this->$class = new $class();
+				if(class_exists($className)) {
+					$this->$className = new $className();
+				}
 			}	
 		}
 	}
