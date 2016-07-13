@@ -39,9 +39,9 @@ class Model extends Table
 					foreach($field as $condition => $val)
 					{
 						if(in_array($condition, $this->spesialConditions)) {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($this, $data, $val);
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($this, $data, $filds, $val);
 						} else {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($data, $val);
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($data, $filds, $val);
 						}				
 					}
 				}
