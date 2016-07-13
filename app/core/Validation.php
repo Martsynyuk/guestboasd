@@ -18,10 +18,10 @@ class Validation
 		return false;
 	}
 	
-	public function matches($rules, $value)
+	public function matches($data, $first, $confirmation)
 	{
-		if(!preg_match($rules, $value)) {
-			return 'wrong data';
+		if($data[$first] != $data[$confirmation]) {
+			return 'fields are not equal';
 		}
 		return false;
 	}

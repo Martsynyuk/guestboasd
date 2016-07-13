@@ -9,12 +9,12 @@ class Model extends Table
 		'username' => [
 			'min' => 6,
 			'max' => 20,
-			'matches' => '/^[A-Z][a-z]+$/',
 			'unique' => true,
 		],
 		'password' => [
 			'min' => 4,
-			'max' => 10
+			'max' => 10,
+			'matches' => 'confirmpassword',
 		],
 	];
 	
@@ -30,11 +30,22 @@ class Model extends Table
 			foreach($this->validationRules as $field => $value)
 			{
 				if($field == $fields) {
-					if(!$this->error($field, $val)) {
-						return false;
+					foreach($field as $condition => $val)
+					{
+						if($condition == 'unique') {
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($this, $val, $value);
+						} elseif($condition == 'matches') {
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($data, $field, $val);
+						} else {
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($val, $value);
+						}				
 					}
 				}
 			}
+		}
+		
+		if(!empty($this->errorInfo)) {
+			return false;
 		}
 		return true;
 	}
@@ -50,40 +61,15 @@ class Model extends Table
 	
 	public function save($data, $where = [])
 	{
-		if($this->validate($data))
-		{
-			if(empty($where)) {
-				return $this->insert($this->tableName, $data);
-			} else {
-				return $this->update($this->tableName, $data, $where);
-			}
+		if(empty($where)) {
+			return $this->insert($this->tableName, $data);
 		} else {
-			return false;
+			return $this->update($this->tableName, $data, $where);
 		}
 	}
 	
 	public function deleteRecord($where)
 	{
 		return $this->delete($this->tableName, $where);
-	}
-	
-	public function error($field, $value)
-	{
-		foreach($field as $condition => $val)
-		{
-			if($this->validateObj->$condition($val, $value)) {
-				if($condition == 'unique') {
-					$this->errorInfo[$field][] = $this->validateObj->$condition($this, $val, $value);
-				} else {
-					$this->errorInfo[$field][] = $this->validateObj->$condition($val, $value);
-				}
-				
-			}
-		}
-		
-		if(!empty($this->errorInfo)) {
-			return false;
-		}
-		return true;
 	}
 }
