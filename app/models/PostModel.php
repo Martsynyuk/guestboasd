@@ -1,6 +1,6 @@
 <?php
 
-class PostModel extends Table
+class PostModel extends Model
 {
-	private $table = 'post'; 
+	protected $tableName = 'users'; 
 }
