@@ -5,6 +5,9 @@ class Model extends Table
 	protected $tableName;
 	protected $validateObj;
 	public $errorInfo = [];
+	protected $spesialConditions = [
+		'unique',
+	];
 	protected $validationRules = [
 		'username' => [
 			'min' => 6,
@@ -14,7 +17,10 @@ class Model extends Table
 		'password' => [
 			'min' => 4,
 			'max' => 10,
-			'matches' => 'confirmpassword',
+			'matches' => [
+				'password',
+				'confirmpassword',
+				]
 		],
 	];
 	
@@ -32,12 +38,10 @@ class Model extends Table
 				if($field == $fields) {
 					foreach($field as $condition => $val)
 					{
-						if($condition == 'unique') {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($this, $val, $value);
-						} elseif($condition == 'matches') {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($data, $field, $val);
+						if(in_array($condition, $this->spesialConditions)) {
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($this, $data, $val);
 						} else {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($val, $value);
+							$this->errorInfo[$fields][] = $this->validateObj->$condition($data, $val);
 						}				
 					}
 				}

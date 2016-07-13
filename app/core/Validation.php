@@ -2,58 +2,32 @@
 
 class Validation
 {
-	public function min($rules, $value)
+	public function min($data, $rules)
 	{
-		if($value <= strlen($rules)) {
-			return 'mast be at list ' . $rules . ' sumbols';
-		}
-		return false;
+
 	}
 	
-	public function max($rules, $value)
+	public function max($data, $rules)
 	{
-		if($value >= strlen($rules)) {
-			return 'mast maximum ' . $rules . ' sumbols';
-		}
-		return false;
+
 	}
 	
-	public function matches($data, $first, $confirmation)
+	public function matches($data, $rules)
 	{
-		if($data[$first] != $data[$confirmation]) {
-			return 'fields are not equal';
-		}
-		return false;
+
 	}
 	
-	public function email($rules, $value)
+	public function email($data, $rules)
 	{
-		if($rules) {
-			if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-				return 'wrong email';
-			}
-		}
-		return false;
 	}
 	
-	public function required($rules, $value)
+	public function required($data, $rules)
 	{
-		if($rules) {
-			if($value != '')
-			{
-				return 'can\'t be empty';
-			}
-		}
-		return false;
+		
 	}
 	
-	public function unique($model, $rules, $value)
+	public function unique($model, $data, $rules)
 	{
-		if($rules) {
-			if($model->find($value)) {
-				return 'this text already exists';
-			}
-		}
-		return false;
+		
 	}
 }
