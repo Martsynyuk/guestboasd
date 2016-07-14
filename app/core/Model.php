@@ -4,25 +4,7 @@ class Model extends Table
 {
 	protected $tableName;
 	protected $validateObj;
-	public $errorInfo = [];
-	protected $spesialConditions = [
-		'unique',
-	];
-	protected $validationRules = [
-		'username' => [
-			'min' => 6,
-			'max' => 20,
-			'unique' => true,
-		],
-		'password' => [
-			'min' => 4,
-			'max' => 10,
-			'matches' => [
-				'password',
-				'confirmpassword',
-				]
-		],
-	];
+	protected $validationRules = [];
 	
 	public function __construct()
 	{	
@@ -31,25 +13,33 @@ class Model extends Table
 	
 	public function validate($data)
 	{
-		foreach($data as $fields => $val)
+		foreach($data as $fieldName => $val)
 		{
-			foreach($this->validationRules as $field => $value)
+			foreach($this->validationRules as $field => $keys)
 			{
-				if($field == $fields) {
-					foreach($field as $condition => $val)
+				if($field == $fieldName) {
+					foreach($keys as $condition => $rules)
 					{
-						if(in_array($condition, $this->spesialConditions)) {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($this, $data, $filds, $val);
+						if(is_array($rules)) {
+							foreach($rules as $fields)
+							{
+								if(in_array($fields, $data)) {
+									$val[$fields] = $data[$fields];
+								}
+							}
+						}
+						
+						if(in_array($condition, $this->validateObj->spesialConditions)) {
+							$this->validateObj->$condition($this, $fieldName, $rules, $val);
 						} else {
-							$this->errorInfo[$fields][] = $this->validateObj->$condition($data, $filds, $val);
-						}				
+							$this->validateObj->$condition($data, $fieldName, $rules, $val);
+						}
 					}
 				}
 			}
 		}
-		
-		if(!empty($this->errorInfo)) {
-			return false;
+		if($this->validateObj->validationPassed) {
+			return $this->validateObj->errorInfo;
 		}
 		return true;
 	}
