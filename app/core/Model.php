@@ -39,9 +39,14 @@ class Model extends Table
 			}
 		}
 		if($this->validateObj->validationPassed) {
-			return $this->validateObj->errorInfo;
+			return false;
 		}
 		return true;
+	}
+	
+	public function getErrors()
+	{
+		return $this->validateObj->errorInfo;
 	}
 	
 	public function find($where = [], $limit = [], $order = [])
