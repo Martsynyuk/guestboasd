@@ -9,11 +9,14 @@ $settings = [
 		'user' => 'root',
 		'password' => ''
 	],
-	'router' =>[
+	'router' => [
 		'defaultController' => 'Post',
 		'defaultAction' => 'index',
 		'defaultErrorAction' => 'error'
-	]
+	],
+	'md5' => [
+		'solt' => 'board',
+	],
 ];
 
 spl_autoload_register(function($file) {

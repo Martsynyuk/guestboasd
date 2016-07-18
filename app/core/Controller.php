@@ -16,7 +16,7 @@ class Controller
 	public function setModels($controller)
 	{
 		if(empty($this->uses)) {
-			$controllers = $controller . 'Model';
+			$controllers = $controller;
 			$this->$controllers = new $controllers();
 		} else {
 			foreach($this->uses as $className)

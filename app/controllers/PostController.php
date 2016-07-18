@@ -3,26 +3,26 @@
 class PostController extends Controller
 {
 	public $uses = [
-		'PostModel'
+			'PostModel'
 	];
-	
+
 	public function actionCreate()
 	{
-		
+
 	}
-	
+
 	public function actionUpdate()
 	{
-		
+
 	}
-	
+
 	public function actionIndex()
 	{
-		
+
 	}
-	
+
 	public function actionError($error)
 	{
-		
+
 	}
 }
