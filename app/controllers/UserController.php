@@ -8,7 +8,7 @@ class UserController extends Controller
 	
 	public function actionRegister()
 	{
-		if($this->User->isLogin) {
+		if(User::isLogin()) {
 			Redirect::to();
 		}
 		if(!empty($_POST)) {
@@ -30,7 +30,7 @@ class UserController extends Controller
 	
 	public function actionLogin()
 	{
-		if($this->User->isLogin) {
+		if(User::isLogin()) {
 			Redirect::to();
 		}
 		if(!empty($_POST)) {

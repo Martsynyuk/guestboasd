@@ -27,9 +27,23 @@ class User extends Model
 		],
 	];
 	
+	public static function isLogin()
+	{
+		if($_SESSION['login']) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public function auth($status)
 	{
-		$this->isLogin = $status;
+		if($status) {
+			$this->isLogin = $_SESSION['login']	= true;			
+		} else {
+			$this->isLogin = false;
+			unset($_SESSION['login']);
+		}
 	}
 	
 	public function validate($data)
