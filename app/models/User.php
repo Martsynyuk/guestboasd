@@ -2,7 +2,6 @@
 
 class User extends Model
 {
-	public $isLogin = false;
 	protected $tableName = 'users';
 	protected $validationRules = [
 		'username' => [
@@ -39,9 +38,8 @@ class User extends Model
 	public function auth($status)
 	{
 		if($status) {
-			$this->isLogin = $_SESSION['login']	= true;			
+			$_SESSION['login']	= true;			
 		} else {
-			$this->isLogin = false;
 			unset($_SESSION['login']);
 		}
 	}
