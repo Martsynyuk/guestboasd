@@ -2,7 +2,6 @@
 
 class PostController extends Controller
 {
-	public $a = 1;
 	public $uses = [
 			'PostModel'
 	];
