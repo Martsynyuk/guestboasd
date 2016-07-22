@@ -19,10 +19,7 @@ class User extends Model
 			'min' => 6,
 			'max' => 16,
 			'required' => true,
-			'matches' => [
-				'password',
-				'confirmpassword'
-			],
+			'matches' => 'confirmpassword',
 		],
 	];
 	
@@ -43,29 +40,5 @@ class User extends Model
 			unset($_SESSION['login']);
 		}
 	}
-	
-	public function validate($data)
-	{
-		return parent::validate($data);
-	}
-	
-	public function getErrors()
-	{
-		return parent::getErrors();
-	}
-	
-	public function find($where = [], $limit = [], $order = [])
-	{
-		return parent::find($where = [], $limit = [], $order = []);
-	}
-	
-	public function save($data, $where = [])
-	{
-		return parent::save($data, $where = []);
-	}
-	
-	public function deleteRecord($where)
-	{
-		return parent::deleteRecord($where);
-	}
+
 }
