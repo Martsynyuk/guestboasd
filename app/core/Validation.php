@@ -27,7 +27,7 @@ class Validation
 	
 	public function matches($fieldName, $rules, $value)
 	{
-		if(in_array($rules, $this->data)) {
+		if(array_key_exists($rules, $this->data)) {
 			if($this->data[$rules] != $this->data[$fieldName]) {
 				$this->validationPassed = false;
 				$this->errorInfo[$fieldName][] = 'fields are not equal';
