@@ -8,44 +8,34 @@ class UserController extends Controller
 	
 	public function actionRegister()
 	{
-		if(User::isLogin()) {
-			Redirect::to();
-		}
 		if(!empty($_POST)) {
-			if($this->User->validate($_POST)) {
-				$this->User->save($data = [
-					'username' => $_POST['username'],
-					'email' => $_POST['email'],
-					'password' => md5($_POST['password'] . Config::get('md5/solt')),
-				]);
-				Redirect::to('/user/Login');
+			if($this->User->validation('register', $_POST)) {
+				$this->User->saveUser($_POST);
 			} else {
 				$this->set('errors', $this->User->getErrors());
 				$this->display('register');
 			}
-		} else {
-			$this->display('register');
 		}
 	}
 	
 	public function actionLogin()
 	{
-		if(User::isLogin()) {
-			Redirect::to();
-		}
 		if(!empty($_POST)) {
-			if(!empty($this->User->find($where = [
-					'username' => $_POST['username'],
-					'password' => md5($_POST['password'] . Config::get('md5/solt')),
-			]))) {
-				$this->User->auth(true);
-				Redirect::to('/user/Login');
+			if(!empty($_POST['login']) && filter_var($_POST['login'], FILTER_VALIDATE_EMAIL)) {
+				$_POST['email'] = $_POST['login'];
 			} else {
-				$this->set('badLogin', 'bad login or password');
+				$_POST['username'] = $_POST['login'];
+			}
+			
+			if($this->User->validation('login', $_POST)) {
+				if(!$this->User->auth($_POST)) {
+					$this->set('errors', 'bad login or password');
+					$this->display('login');
+				}
+			} else {
+				$this->set('errors', $this->User->getErrors());
 				$this->display('login');
 			}
-		} else {
-			$this->display('login');
 		}
 	}
 	
