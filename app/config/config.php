@@ -5,7 +5,7 @@ $settings = [
 	'database' => [
 		'driver' => 'MySQL',
 		'host' => 'localhost',
-		'dbname' => 'user',
+		'dbname' => 'guestboard',
 		'user' => 'root',
 		'password' => ''
 	],

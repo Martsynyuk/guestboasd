@@ -2,6 +2,7 @@
 
 class UserController extends Controller
 {
+	public $layout = 'main';
 	public $uses = [
 		'User',
 	];
@@ -26,7 +27,7 @@ class UserController extends Controller
 			} else {
 				$_POST['username'] = $_POST['login'];
 			}
-			
+
 			if($this->User->validation('login', $_POST)) {
 				if(!$this->User->auth($_POST)) {
 					$this->set('errors', 'bad login or password');
@@ -41,7 +42,7 @@ class UserController extends Controller
 	
 	public function actionLogout()
 	{
-		$this->User->auth(false);
+		$this->User->userSession(false);
 		Redirect::to('/user/Login');
 	}
 }

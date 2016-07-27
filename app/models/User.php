@@ -3,7 +3,7 @@
 class User extends Model
 {
 	protected $tableName = 'users';
-	protected $valdationRules = [];
+	protected $validationRules = [];
 	protected $validation = [
 		'register' => [
 			'username' => [
@@ -43,8 +43,8 @@ class User extends Model
 	];
 	
 	public static function isLogin()
-	{
-		if($_SESSION['login']) {
+	{	
+		if(!empty($_SESSION['login'])) {
 			return true;
 		} else {
 			return false;
@@ -54,14 +54,14 @@ class User extends Model
 	public function validation($action, $data)
 	{
 		if(array_key_exists($action, $this->validation)) {
-			$this->valdationRules = $this->validation[$action];
+			$this->validationRules = $this->validation[$action];
 			return $this->validate($data);
 		}
 		return false;
 	}
 	
 	public function saveUser($data)
-	{
+	{	
 		$this->save([
 			'username' => $data['username'],
 			'email' => $data['email'],
@@ -74,14 +74,22 @@ class User extends Model
 	{
 		unset($data['login']);
 		unset($data['submit']);
-		$data['password'] = md5($data['password'] . Config::get('md5/solt'));
-
+		foreach($data as $key => $value) {
+			if($key == 'password') {
+				$data['password'] = ['=', md5($data['password'] . Config::get('md5/solt'))];
+			} else {
+				$data[$key] = ['=', $value];
+			}
+		}	
+		
 		if(!empty($this->find($data))) {
-			$_SESSION['login'] = true;
-			Redirect::to('/user/Login');
+			$this->userSession(true);
+			Redirect::to('/');
 		} else {
 			return false;
 		}
 	}
-
+	public function userSession($status) {
+		$_SESSION['login'] = $status;
+	}
 }

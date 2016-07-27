@@ -7,10 +7,10 @@ class Model extends Table
 	protected $validationRules = [];
 	
 	public function validate($data)
-	{
+	{	
 		$this->validateObj = new Validation();
 		$this->validateObj->data = $data;
-		
+
 		foreach($data as $fieldName => $val) {
 			foreach($this->validationRules as $field => $keys) {
 				if($field == $fieldName) {
@@ -19,7 +19,7 @@ class Model extends Table
 							if(in_array($condition, $this->validateObj->spesialConditions)) {
 								$this->validateObj->$condition($this, $fieldName, $rules, $val);
 							} else {
-								$this->validateObj->$condition($data, $fieldName, $rules, $val);
+								$this->validateObj->$condition($fieldName, $rules, $val);
 							}
 						}
 					}
@@ -39,7 +39,7 @@ class Model extends Table
 		if(empty($where)) {
 			return $this->getAll($this->tableName);
 		} else {
-			return $this->get($this->tableName, $where, $limit, $order);
+			return $this->get($this->tableName, $where, $limit = [], $order = []);
 		}
 	}
 	

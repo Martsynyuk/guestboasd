@@ -31,12 +31,16 @@ class Router
 						Redirect::to();
 					} else {
 						$controller->$action();
-						$controller->display($this->action);
+						$controller->set('content', $controller);
+						$controller->set('action', $this->action);
+						$controller->displayLayout($controller->layout);
 					}
 				} else {
 					if(in_array($action, $this->autorization)) {
 						$controller->$action();
-						$controller->display($this->action);
+						$controller->set('content', $controller);
+						$controller->set('action', $this->action);
+						$controller->displayLayout($controller->layout);
 					} else {
 						Redirect::to('/user/login');
 					}
@@ -48,7 +52,6 @@ class Router
 			$this->error('404');
 		}
 	}
-	
 	private function urlParser()
 	{
 		$url = explode('/', ltrim($_SERVER ['REQUEST_URI'], '/'));

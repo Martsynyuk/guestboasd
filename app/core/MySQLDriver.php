@@ -40,7 +40,7 @@ class MySQLDriver implements DatabaseInterface
 			if (count($params)) {
 				$index = 1;
 				foreach ($params as $value) {
-					$this->query->bindValue($index, $value);
+					$this->query->bindValue($index, $value, PDO::PARAM_STR);
 					$index++;
 				}
 			}

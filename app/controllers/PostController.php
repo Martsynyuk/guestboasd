@@ -2,6 +2,7 @@
 
 class PostController extends Controller
 {
+	public $layout = 'islogin';
 	public $uses = [
 			'PostModel'
 	];

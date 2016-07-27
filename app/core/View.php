@@ -31,4 +31,13 @@ class View
 		}
 		echo ob_get_clean();
 	}
+	public function renderLayout($template)
+	{
+		ob_start();
+		extract($this->data);
+		if (file_exists($this->templatesRoot . '/layouts/' . $template . $this->extension)) {
+			include_once $this->templatesRoot . '/layouts/' . $template . $this->extension;
+		}
+		echo ob_get_clean();
+	}
 }

@@ -37,4 +37,8 @@ class Controller
 	{
 		$this->view->render($template);
 	}
+	public function displayLayout($template)
+	{
+		$this->view->renderLayout($template);
+	}
 }

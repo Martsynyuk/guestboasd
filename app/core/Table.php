@@ -56,6 +56,7 @@ class Table
 			$value .= '?, ';
 		}
 		$sql = "INSERT INTO $table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($value, ', ') . ")";
+
 		return $this->db->executeQuery($sql, $data);
 	}
 
@@ -92,7 +93,6 @@ class Table
 		if(!empty($order)){
 			$orderStr = 'ORDER BY ' . implode(', ', $order);
 		}
-
 		$sql = "$action FROM $table WHERE $conditions $orderStr $limitStr";
 		return $this->db->executeQuery($sql, $values);
 	}

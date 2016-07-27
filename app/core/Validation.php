@@ -11,15 +11,15 @@ class Validation
 
 	public function min($fieldName, $rules, $value)
 	{
-		if($rules >= strlen($value)) {
+		if($rules > strlen($value)) {
 			$this->validationPassed = false;
 			$this->errorInfo[$fieldName][] = 'mast be at list ' . $rules . ' sumbols';
 		}
 	}
 	
 	public function max($fieldName, $rules, $value)
-	{
-		if($rules <= strlen($value)) {
+	{	
+		if($rules < strlen($value)) {
 			$this->validationPassed = false;
 			$this->errorInfo[$fieldName][] = 'mast maximum ' . $rules . ' sumbols';
 		}
@@ -55,8 +55,10 @@ class Validation
 	
 	public function unique($model, $fieldName, $rules, $value)
 	{
+		$condition[$fieldName] = ['=', $value];
+		
 		if($rules) {
-			if($model->find($value)) {
+			if($model->find($condition)) {
 				$this->validationPassed = false;
 				$this->errorInfo[$fieldName][] = 'this text already exists';
 			}
