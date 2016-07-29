@@ -2,6 +2,7 @@
 
 class User extends Model
 {
+	public static $error = [];
 	protected $tableName = 'users';
 	protected $validationRules = [];
 	protected $validation = [
@@ -85,11 +86,15 @@ class User extends Model
 		return $rules;
 	}
 	
-	public static function form($action, $error)
+	public function setError($error)
+	{
+		self::$error = $error;
+	}
+	
+	public static function form($action)
 	{
 		$obj = new User();
 		$rules = $obj->rules();
-		
 		if(!empty($_POST)) {
 			$obj->validation($action, $_POST);
 		}	
@@ -102,10 +107,10 @@ class User extends Model
 				}
 				echo '<label>' . $key . '<input' . $content . '></label>';
 				
-				if(!empty($error) && array_key_exists($key, $error)) {
-					echo '<div class="error">' . implode(', ', $error[$key]) . '</div>';
-				} elseif($key = 'login' && array_key_exists('username', $error) || array_key_exists('email', $error)) {
-					echo '<div class="error">' . implode(', ', $error['username']) . '</div>';
+				if(!empty(self::$error) && array_key_exists($key, self::$error)) {
+					echo '<div class="error">' . implode(', ', self::$error[$key]) . '</div>';
+				} elseif($key = 'login' && array_key_exists('username', self::$error) || array_key_exists('email', self::$error)) {
+					echo '<div class="error">' . implode(', ', self::$error['username']) . '</div>';
 				}
 			}
 			echo '<input type="submit" name="submit" value="submit">';

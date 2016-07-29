@@ -20,7 +20,7 @@ class UserController extends Controller
 			if($this->User->validation('register', $_POST) && $this->User->saveUser($_POST)) {
 				Redirect::to('/user/Login');
 			} else {
-				$this->set('errors', $this->User->getErrors());
+				$this->User->setError($this->User->getErrors());
 			}
 		}
 	}
@@ -30,12 +30,12 @@ class UserController extends Controller
 		if(!empty($_POST)) {
 			if($this->User->validation('login', $_POST)) {
 				if(!$this->User->auth($_POST)) {
-					$this->set('errors', ['login'=> ['bad login or password']]);
+					$this->User->setError(['login'=> ['bad login or password']]);
 				} else {
 					Redirect::to();
 				}
 			} else {
-				$this->set('errors', $this->User->getErrors());
+				$this->User->setError($this->User->getErrors());
 			}
 		}
 	}
