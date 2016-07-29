@@ -8,7 +8,6 @@ class Router
 	private $controller = null;
 	private $action = null;
 	private $params = [];
-	private $autorization = ['actionLogin', 'actionRegister'];
 	
 	public function __construct()
 	{	
@@ -22,29 +21,12 @@ class Router
 	{
 		if(class_exists($this->controller . 'Controller')) {
 			$controller = $this->controller . 'Controller';
-			$controller = new $controller($this->controller, $this->params);
+			$controller = new $controller($this->controller, $this->action, $this->params);
 			
 			if(method_exists($controller, 'action' . ucfirst($this->action))) {
 				$action = 'action' . ucfirst($this->action);
-				if(User::isLogin()) {
-					if(in_array($action, $this->autorization)) {
-						Redirect::to();
-					} else {
-						$controller->$action();
-						$controller->set('content', $controller);
-						$controller->set('action', $this->action);
-						$controller->displayLayout($controller->layout);
-					}
-				} else {
-					if(in_array($action, $this->autorization)) {
-						$controller->$action();
-						$controller->set('content', $controller);
-						$controller->set('action', $this->action);
-						$controller->displayLayout($controller->layout);
-					} else {
-						Redirect::to('/user/login');
-					}
-				}				
+				$controller->$action();
+				$controller->display($this->action, $controller->layout);
 			} else {
 				$this->error('404');
 			}

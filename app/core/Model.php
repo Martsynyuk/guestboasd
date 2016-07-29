@@ -6,9 +6,14 @@ class Model extends Table
 	protected $validateObj;
 	protected $validationRules = [];
 	
+	public function __construct()
+	{
+		parent::__construct();
+		$this->validateObj = new Validation();
+	}
+	
 	public function validate($data)
 	{	
-		$this->validateObj = new Validation();
 		$this->validateObj->data = $data;
 
 		foreach($data as $fieldName => $val) {

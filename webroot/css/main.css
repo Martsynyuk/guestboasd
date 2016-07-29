@@ -4,7 +4,12 @@ body{
 	margin: 0;
 	padding: 0;
 }
-input, span{
+input, label, a{
 	display: block;
 	margin: 5px 0 0 10px;
+}
+.error{
+	margin-left: 10px;
+	color: red;
+	padding: 2px;
 }

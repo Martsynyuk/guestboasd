@@ -3,14 +3,32 @@
 class Controller 
 {
 	private $view;
+	public $layout = 'main';
 	public $uses = [];
 	public $params = [];
+	private $autorization = ['login', 'register'];
 	
-	public function __construct($controller, $params = [])
+	public function __construct($controller, $action, $params = [])
 	{
+		$this->beforeAction($action);
 		$this->params = $params;
 		$this->view = new View($controller);		
 		$this->setModels($controller);
+	}
+	
+	public function beforeAction($action)
+	{
+		if($action != 'error') {
+			if(User::isLogin()) {
+				if(in_array($action, $this->autorization)) {
+					Redirect::to();
+				}
+			} else {
+				if(!in_array($action, $this->autorization)) {
+					Redirect::to('/user/login');
+				}
+			}
+		}
 	}
 	
 	public function setModels($controller)
@@ -33,12 +51,9 @@ class Controller
 		$this->view->set($name, $value);
 	}
 	
-	public function display($template)
+	public function display($template, $layout)
 	{
-		$this->view->render($template);
+		$this->view->render($template, $layout);
 	}
-	public function displayLayout($template)
-	{
-		$this->view->renderLayout($template);
-	}
+
 }

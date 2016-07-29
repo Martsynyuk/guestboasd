@@ -6,6 +6,7 @@ class View
 	private $data = [];
 	private $templatesRoot = 'templates';
 	private $extension = '.php';
+	
 	public function __construct($workingFolder)
 	{	
 		$this->workingFolder = $workingFolder;
@@ -22,21 +23,27 @@ class View
 		}
 		return false;
 	}
-	public function render($template)
+	public function render($template, $layout)
+	{
+		$content = $this->template($template);
+		$this->set('content', $content);
+		$this->layout($layout);
+	}
+	private function template($template)
 	{
 		ob_start();
 		extract($this->data);
 		if (file_exists($this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
 			include_once $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}
-		echo ob_get_clean();
+		return ob_get_clean();
 	}
-	public function renderLayout($template)
+	private function layout($layout)
 	{
 		ob_start();
 		extract($this->data);
-		if (file_exists($this->templatesRoot . '/layouts/' . $template . $this->extension)) {
-			include_once $this->templatesRoot . '/layouts/' . $template . $this->extension;
+		if (file_exists($this->templatesRoot . '/layouts/' . $layout . $this->extension)) {
+			include_once $this->templatesRoot . '/layouts/' . $layout . $this->extension;
 		}
 		echo ob_get_clean();
 	}

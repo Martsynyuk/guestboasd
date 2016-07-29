@@ -2,7 +2,7 @@
 
 class PostController extends Controller
 {
-	public $layout = 'islogin';
+	public $layout = 'main';
 	public $uses = [
 			'PostModel'
 	];
@@ -22,7 +22,7 @@ class PostController extends Controller
 
 	}
 
-	public function actionError($error)
+	public function actionError($error = '404')
 	{
 
 	}

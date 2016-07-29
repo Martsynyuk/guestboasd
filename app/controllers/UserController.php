@@ -7,14 +7,20 @@ class UserController extends Controller
 		'User',
 	];
 	
+	public function beforeAction($action)
+	{
+		/*if(!empty($_POST)) {
+			Redirect::to($_SERVER ['REQUEST_URI']);
+		}*/
+	}
+	
 	public function actionRegister()
 	{
 		if(!empty($_POST)) {
-			if($this->User->validation('register', $_POST)) {
-				$this->User->saveUser($_POST);
+			if($this->User->validation('register', $_POST) && $this->User->saveUser($_POST)) {
+				Redirect::to('/user/Login');
 			} else {
 				$this->set('errors', $this->User->getErrors());
-				$this->display('register');
 			}
 		}
 	}
@@ -22,27 +28,21 @@ class UserController extends Controller
 	public function actionLogin()
 	{
 		if(!empty($_POST)) {
-			if(!empty($_POST['login']) && filter_var($_POST['login'], FILTER_VALIDATE_EMAIL)) {
-				$_POST['email'] = $_POST['login'];
-			} else {
-				$_POST['username'] = $_POST['login'];
-			}
-
 			if($this->User->validation('login', $_POST)) {
 				if(!$this->User->auth($_POST)) {
-					$this->set('errors', 'bad login or password');
-					$this->display('login');
+					$this->set('errors', ['login'=> ['bad login or password']]);
+				} else {
+					Redirect::to();
 				}
 			} else {
 				$this->set('errors', $this->User->getErrors());
-				$this->display('login');
 			}
 		}
 	}
 	
 	public function actionLogout()
 	{
-		$this->User->userSession(false);
+		unset($_SESSION['id']);
 		Redirect::to('/user/Login');
 	}
 }
