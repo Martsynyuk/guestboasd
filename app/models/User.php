@@ -109,7 +109,7 @@ class User extends Model
 				
 				if(!empty(self::$error) && array_key_exists($key, self::$error)) {
 					echo '<div class="error">' . implode(', ', self::$error[$key]) . '</div>';
-				} elseif($key = 'login' && array_key_exists('username', self::$error) || array_key_exists('email', self::$error)) {
+				} elseif($key == 'login' && array_key_exists('username', self::$error) || $key == 'login' && array_key_exists('email', self::$error)) {
 					echo '<div class="error">' . implode(', ', self::$error['username']) . '</div>';
 				}
 			}

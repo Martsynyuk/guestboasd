@@ -15,7 +15,7 @@ class UserController extends Controller
 	}
 	
 	public function actionRegister()
-	{
+	{	var_dump($_POST);
 		if(!empty($_POST)) {
 			if($this->User->validation('register', $_POST) && $this->User->saveUser($_POST)) {
 				Redirect::to('/user/Login');
