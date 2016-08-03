@@ -69,13 +69,4 @@ class User extends Model
 		$this->setErrors('login', 'bad login or password');
 		return false;
 	}
-	
-	public function validation($action, $data)
-	{
-		if(array_key_exists($action, $this->validationRules)) {
-			$this->validationRules = $this->validationRules[$action];
-			return $this->validate($data);
-		}
-		return false;
-	}
 }

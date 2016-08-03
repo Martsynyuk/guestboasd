@@ -29,7 +29,7 @@ class UserController extends Controller
 	public function actionRegister()
 	{
 		if(!empty($_POST)) {
-			if($this->User->validation('register', $_POST) && $this->User->saveUser($_POST)) {
+			if($this->User->validate('register', $_POST) && $this->User->saveUser($_POST)) {
 				Redirect::to('/user/Login');
 			} else {
 				$this->set('error', $this->User->getErrors());
@@ -40,7 +40,7 @@ class UserController extends Controller
 	public function actionLogin()
 	{
 		if(!empty($_POST)) {
-			if($this->User->validation('login', $_POST) && $this->User->auth($_POST)) {
+			if($this->User->validate('login', $_POST) && $this->User->auth($_POST)) {
 				Redirect::to();
 			} else {
 				$this->set('error', $this->User->getErrors());

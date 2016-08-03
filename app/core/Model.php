@@ -12,9 +12,12 @@ class Model extends Table
 		$this->validateObj = new Validation();
 	}
 	
-	public function validate($data)
+	public function validate($action, $data)
 	{	
 		$this->validateObj->data = $data;
+		if(array_key_exists($action, $this->validationRules)) {
+			$this->validationRules = $this->validationRules[$action];
+		}
 
 		foreach($data as $fieldName => $val) {
 			foreach($this->validationRules as $field => $keys) {
