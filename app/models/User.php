@@ -2,10 +2,8 @@
 
 class User extends Model
 {
-	public static $error = [];
 	protected $tableName = 'users';
-	protected $validationRules = [];
-	protected $validation = [
+	protected $validationRules = [
 		'register' => [
 			'username' => [
 				'min' => 6,
@@ -26,11 +24,7 @@ class User extends Model
 			],
 		],
 		'login' => [
-			'username' => [
-				'required' => true,
-			],
-			'email' => [
-				'email' => true,
+			'login' => [
 				'required' => true,
 			],
 			'password' => [
@@ -39,106 +33,10 @@ class User extends Model
 		],
 	];
 	
-	public function rules()
-	{
-		$rules = [
-			'login' => [
-				'login' => [
-					'placeholder' => 'input name or email',
-					'type' => 'text',
-					'name' => 'login',
-					'size' => '15',
-				],
-				'password' => [
-					'placeholder' => 'input password',
-					'type' => 'password',
-					'name' => 'password',
-					'size' => '15',
-				],
-			],
-			'register' => [
-				'username' => [
-					'placeholder' => 'input name',
-					'type' => 'text',
-					'name' => 'username',
-					'size' => '15',
-				],
-				'email' => [
-					'placeholder' => 'input email',
-					'type' => 'mail',
-					'name' => 'email',
-					'size' => '15',
-				],
-				'password' => [
-					'placeholder' => 'input password',
-					'type' => 'password',
-					'name' => 'password',
-					'size' => '15',
-				],
-				'confirm password' => [
-					'placeholder' => 'confirm password',
-					'type' => 'password',
-					'name' => 'confirmpassword',
-					'size' => '15',
-				],		
-			],
-		];
-		return $rules;
-	}
-	
-	public function setError($error)
-	{
-		self::$error = $error;
-	}
-	
-	public static function form($action)
-	{
-		$obj = new User();
-		$rules = $obj->rules();
-		if(!empty($_POST)) {
-			$obj->validation($action, $_POST);
-		}	
-		
-		if(!empty($rules[$action])) {
-			foreach($rules[$action] as $key => $value) {
-				$content = '';
-				foreach($value as $field => $val) {
-					$content .= ' ' . $field . '="' . $val . '"';
-				}
-				echo '<label>' . $key . '<input' . $content . '></label>';
-				
-				if(!empty(self::$error) && array_key_exists($key, self::$error)) {
-					echo '<div class="error">' . implode(', ', self::$error[$key]) . '</div>';
-				} elseif($key == 'login' && array_key_exists('username', self::$error) || $key == 'login' && array_key_exists('email', self::$error)) {
-					echo '<div class="error">' . implode(', ', self::$error['username']) . '</div>';
-				}
-			}
-			echo '<input type="submit" name="submit" value="submit">';
-		}
-	}
-	
 	public static function isLogin()
 	{	
 		if(!empty($_SESSION['id'])) {
 			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public function validation($action, $data)
-	{
-		if(isset($data['login'])) {
-			if(filter_var($data['login'], FILTER_VALIDATE_EMAIL)) {
-				$data['email'] = $data['login'];		
-			} else {
-				$data['username'] = $data['login'];
-			}
-		}
-		
-		if(array_key_exists($action, $this->validation)) {
-			$this->validationRules = $this->validation[$action];
-			return $this->validate($data);
 		}
 		return false;
 	}
@@ -155,26 +53,29 @@ class User extends Model
 	public function auth($data)
 	{
 		if(!empty($data['login']) && filter_var($data['login'], FILTER_VALIDATE_EMAIL)) {
-			$data['email'] = $data['login'];
+			$data['email'] = ['=', $data['login']];
+			$data['password'] = ['=', md5($data['password'] . Config::get('md5/solt'))];
 		} else {
-			$data['username'] = $data['login'];
+			$data['username'] = ['=', $data['login']];
+			$data['password'] = ['=', md5($data['password'] . Config::get('md5/solt'))];
 		}
 		unset($data['login']);
 		unset($data['submit']);
 		
-		foreach($data as $key => $value) {
-			if($key == 'password') {
-				$data['password'] = ['=', md5($data['password'] . Config::get('md5/solt'))];
-			} else {
-				$data[$key] = ['=', $value];
-			}
-		}	
-		
 		if(!empty($this->find($data))) {
 			$_SESSION['id'] = $this->db->getFirstResult()['id'];
 			return true;
-		} else {
-			return false;
 		}
+		$this->setErrors('login', 'bad login or password');
+		return false;
+	}
+	
+	public function validation($action, $data)
+	{
+		if(array_key_exists($action, $this->validationRules)) {
+			$this->validationRules = $this->validationRules[$action];
+			return $this->validate($data);
+		}
+		return false;
 	}
 }

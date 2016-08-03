@@ -25,21 +25,15 @@ class View
 	}
 	public function render($template, $layout)
 	{
-		$content = $this->template($template);
-		$this->set('content', $content);
-		$this->layout($layout);
-	}
-	private function template($template)
-	{
 		ob_start();
 		extract($this->data);
 		if (file_exists($this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
 			include_once $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}
-		return ob_get_clean();
-	}
-	private function layout($layout)
-	{
+		$content = ob_get_clean();
+		
+		$this->set('content', $content);
+		
 		ob_start();
 		extract($this->data);
 		if (file_exists($this->templatesRoot . '/layouts/' . $layout . $this->extension)) {

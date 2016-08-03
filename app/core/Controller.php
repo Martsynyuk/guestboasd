@@ -6,29 +6,13 @@ class Controller
 	public $layout = 'main';
 	public $uses = [];
 	public $params = [];
-	private $autorization = ['login', 'register'];
+	private $autorization = [];
 	
 	public function __construct($controller, $action, $params = [])
 	{
-		$this->beforeAction($action);
 		$this->params = $params;
 		$this->view = new View($controller);		
 		$this->setModels($controller);
-	}
-	
-	public function beforeAction($action)
-	{
-		if($action != 'error') {
-			if(User::isLogin()) {
-				if(in_array($action, $this->autorization)) {
-					Redirect::to();
-				}
-			} else {
-				if(!in_array($action, $this->autorization)) {
-					Redirect::to('/user/login');
-				}
-			}
-		}
 	}
 	
 	public function setModels($controller)

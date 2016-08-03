@@ -39,6 +39,11 @@ class Model extends Table
 		return $this->validateObj->errorInfo;
 	}
 	
+	protected function setErrors($field, $value)
+	{
+		$this->validateObj->errorInfo[$field][] = $value;
+	}
+	
 	public function find($where = [], $limit = [], $order = [])
 	{
 		if(empty($where)) {
@@ -60,5 +65,12 @@ class Model extends Table
 	public function deleteRecord($where)
 	{
 		return $this->delete($this->tableName, $where);
+	}
+	
+	public static function validHelper($field, $error)
+	{
+		if(array_key_exists($field, $error)) {
+			echo '<div class="error">' . implode(', ', $error[$field]) . '</div>';
+		}
 	}
 }

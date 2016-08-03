@@ -2,25 +2,37 @@
 
 class UserController extends Controller
 {
-	public $layout = 'main';
+	private $autorization = ['login', 'register'];
 	public $uses = [
 		'User',
 	];
 	
+	public function __construct($controller, $action, $params = [])
+	{
+		parent::__construct($controller, $action, $params = []);
+		$this->beforeAction($action);
+	}
+	
 	public function beforeAction($action)
 	{
-		/*if(!empty($_POST)) {
-			Redirect::to($_SERVER ['REQUEST_URI']);
-		}*/
+		if(User::isLogin()) {
+			if(in_array($action, $this->autorization)) {
+				Redirect::to();
+			}
+		} else {
+			if(!in_array($action, $this->autorization)) {
+				Redirect::to('/user/login');
+			}
+		}
 	}
 	
 	public function actionRegister()
-	{	var_dump($_POST);
+	{
 		if(!empty($_POST)) {
 			if($this->User->validation('register', $_POST) && $this->User->saveUser($_POST)) {
 				Redirect::to('/user/Login');
 			} else {
-				$this->User->setError($this->User->getErrors());
+				$this->set('error', $this->User->getErrors());
 			}
 		}
 	}
@@ -28,14 +40,10 @@ class UserController extends Controller
 	public function actionLogin()
 	{
 		if(!empty($_POST)) {
-			if($this->User->validation('login', $_POST)) {
-				if(!$this->User->auth($_POST)) {
-					$this->User->setError(['login'=> ['bad login or password']]);
-				} else {
-					Redirect::to();
-				}
+			if($this->User->validation('login', $_POST) && $this->User->auth($_POST)) {
+				Redirect::to();
 			} else {
-				$this->User->setError($this->User->getErrors());
+				$this->set('error', $this->User->getErrors());
 			}
 		}
 	}
