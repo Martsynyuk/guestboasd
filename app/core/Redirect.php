@@ -2,7 +2,7 @@
 
 class Redirect
 {	
-	public static function to($patch = null)
+	public static function to($patch)
 	{
 		header('Location: ' . $patch . '');
 	}

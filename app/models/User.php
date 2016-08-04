@@ -54,11 +54,10 @@ class User extends Model
 	{
 		if(!empty($data['login']) && filter_var($data['login'], FILTER_VALIDATE_EMAIL)) {
 			$data['email'] = ['=', $data['login']];
-			$data['password'] = ['=', md5($data['password'] . Config::get('md5/salt'))];
 		} else {
-			$data['username'] = ['=', $data['login']];
-			$data['password'] = ['=', md5($data['password'] . Config::get('md5/salt'))];
+			$data['username'] = ['=', $data['login']];			
 		}
+		$data['password'] = ['=', md5($data['password'] . Config::get('md5/salt'))];
 		unset($data['login']);
 		unset($data['submit']);
 		

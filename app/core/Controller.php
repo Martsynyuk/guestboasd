@@ -23,11 +23,11 @@ class Controller
 				if($key == 'deny') {
 					if(User::isLoggetIn()) {
 						if(in_array('user', $value['users']) && in_array($action, $value['actions'])) {
-							Redirect::to('/');
+							Redirect::to($value['redirect']);
 						}
 					} else {
 						if(in_array('guest', $value['users']) && in_array($action, $value['actions'])) {
-							Redirect::to('/user/login');
+							Redirect::to($value['redirect']);
 						}
 					}
 				}

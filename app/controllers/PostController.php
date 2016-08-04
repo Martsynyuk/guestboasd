@@ -18,6 +18,7 @@ class PostController extends Controller
 			'deny' => [
 				'users' => ['guest'],
 				'actions' => ['create', 'update', 'index'],
+				'redirect' => '/user/login',
 			],
 		];
 		

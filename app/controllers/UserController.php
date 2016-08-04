@@ -18,6 +18,7 @@ class UserController extends Controller
 			'deny' => [
 				'users' => ['user'],
 				'actions' => ['login', 'register'],
+				'redirect' => '/',
 			],
 		];
 	}
