@@ -9,7 +9,7 @@ class User extends Model
 				'min' => 6,
 				'max' => 16,
 				'required' => true,
-				'unique' => true,			
+				'unique' => true,
 			],
 			'email' => [
 				'email' => true,
@@ -66,6 +66,14 @@ class User extends Model
 			return true;
 		}
 		$this->setErrors('login', 'bad login or password');
+		return false;
+	}
+	
+	public static function getUserId()
+	{
+		if(isset($_SESSION['id'])) {
+			return $_SESSION['id'];
+		}
 		return false;
 	}
 }

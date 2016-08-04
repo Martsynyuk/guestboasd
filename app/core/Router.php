@@ -36,7 +36,7 @@ class Router
 	}
 	private function urlParser()
 	{
-		$url = explode('/', ltrim($_SERVER ['REQUEST_URI'], '/'));
+		$url = explode('/', trim($_SERVER ['REQUEST_URI'], '/'));
 		
 		$this->controller = $this->defaultController;
 		$this->action = $this->defaultAction;

@@ -12,4 +12,11 @@ class Helper
 			echo '<div class="error">' . $errorBlock . '</div>';
 		}
 	}
+	
+	public static function showText($field, $informations)
+	{
+		if(array_key_exists($field, $informations)) {
+			echo $informations[$field];
+		}
+	}
 }

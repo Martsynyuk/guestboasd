@@ -71,11 +71,11 @@ class Table
 		$set = '';
 		foreach($data as $key => $val)
 		{
-			$set .= $key . '= ?,';
+			$set .= $key . '= ?, ';
 		}
 		
 		$data = array_merge($data, $values);
-		$sql = "UPDATE $table SET " . rtrim($set, ',') . "$conditions";
+		$sql = "UPDATE $table SET " . rtrim($set, ', ') . " WHERE " . "$conditions";
 		return $this->db->executeQuery($sql, $data);
 	}
 

@@ -4,7 +4,7 @@ body{
 	margin: 0;
 	padding: 0;
 }
-input, label, a{
+input, label, textarea{
 	display: block;
 	margin: 5px 0 0 10px;
 }
@@ -12,4 +12,15 @@ input, label, a{
 	margin-left: 10px;
 	color: red;
 	padding: 2px;
+}
+p {
+	margin: 3px 0 0 10px;
+}
+a{
+	margin: 5px 0 0 10px;
+}
+textarea{
+	margin-left: 20px;
+	max-height: 100px;
+	max-width: 150px;
 }

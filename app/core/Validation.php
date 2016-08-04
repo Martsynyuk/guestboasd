@@ -53,6 +53,16 @@ class Validation
 		}
 	}
 	
+	public function intiger($fieldName, $rules, $value)
+	{
+		if($rules) {
+			if(!is_numeric($value)) {
+				$this->validationPassed = false;
+				$this->errorInfo[$fieldName][] = 'mast be intiger';
+			}
+		}
+	}
+	
 	public function unique($model, $fieldName, $rules, $value)
 	{
 		$condition[$fieldName] = ['=', $value];

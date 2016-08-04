@@ -2,8 +2,8 @@
 
 class Redirect
 {	
-	public static function to($patch)
+	public static function to($path)
 	{
-		header('Location: ' . $patch . '');
+		header('Location: ' . $path . '');
 	}
 }
