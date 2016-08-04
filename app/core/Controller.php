@@ -21,7 +21,7 @@ class Controller
 		if(!empty($this->autorization)) {
 			foreach($this->autorization as $key => $value) {
 				if($key == 'deny') {
-					if(User::isLoggedIn()) {
+					if(User::isLoggetIn()) {
 						if(in_array('user', $value['users']) && in_array($action, $value['actions'])) {
 							Redirect::to('/');
 						}

@@ -33,7 +33,7 @@ class User extends Model
 		],
 	];
 	
-	public static function isLoggedIn()
+	public static function isLoggetIn()
 	{	
 		if(!empty($_SESSION['id'])) {
 			return true;
