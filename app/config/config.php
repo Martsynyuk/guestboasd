@@ -15,7 +15,7 @@ $settings = [
 		'defaultErrorAction' => 'error'
 	],
 	'md5' => [
-		'solt' => 'board',
+		'salt' => 'board',
 	],
 ];
 

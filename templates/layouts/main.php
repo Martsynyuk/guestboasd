@@ -9,6 +9,6 @@
 <link rel="stylesheet" type="text/css" href="/webroot/css/main.css">
 </head>
 <body>
-	<?= (User::isLogin()) ? '<a href="/user/logout">logout' : ''?>
+	<?= (User::isLoggedIn()) ? '<a href="/user/logout">logout' : ''?>
 	<?= $content ?>
 </body>

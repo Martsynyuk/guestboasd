@@ -54,8 +54,8 @@ class Router
 	{
 		$controller = $this->defaultController . 'Controller';
 		$action = 'action' . ucfirst($this->defaultErrorAction);
-		$controller = new $controller($this->defaultController);
+		$controller = new $controller($this->defaultController, $action);
 		$controller->$action($error);
-		$controller->display($this->defaultErrorAction);
+		$controller->display($this->defaultErrorAction, $controller->layout);
 	}
 }

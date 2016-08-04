@@ -69,11 +69,4 @@ class Model extends Table
 	{
 		return $this->delete($this->tableName, $where);
 	}
-	
-	public static function validHelper($field, $error)
-	{
-		if(array_key_exists($field, $error)) {
-			echo '<div class="error">' . implode(', ', $error[$field]) . '</div>';
-		}
-	}
 }

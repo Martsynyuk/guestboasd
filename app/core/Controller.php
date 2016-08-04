@@ -6,13 +6,33 @@ class Controller
 	public $layout = 'main';
 	public $uses = [];
 	public $params = [];
-	private $autorization = [];
+	protected $autorization = [];
 	
 	public function __construct($controller, $action, $params = [])
 	{
+		$this->beforeAction($action);
 		$this->params = $params;
 		$this->view = new View($controller);		
 		$this->setModels($controller);
+	}
+	
+	public function beforeAction($action)
+	{
+		if(!empty($this->autorization)) {
+			foreach($this->autorization as $key => $value) {
+				if($key == 'deny') {
+					if(User::isLoggedIn()) {
+						if(in_array('user', $value['users']) && in_array($action, $value['actions'])) {
+							Redirect::to('/');
+						}
+					} else {
+						if(in_array('guest', $value['users']) && in_array($action, $value['actions'])) {
+							Redirect::to('/user/login');
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	public function setModels($controller)

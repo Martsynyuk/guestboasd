@@ -2,31 +2,25 @@
 
 class PostController extends Controller
 {
-	private $autorization = ['login', 'register'];
 	public $uses = [
 			'PostModel'
 	];
 	
 	public function __construct($controller, $action, $params = [])
 	{
+		$this->autorization = $this->autorizationRules();
 		parent::__construct($controller, $action, $params = []);
-		$this->beforeAction($action);
 	}
 	
-	public function beforeAction($action)
+	public function autorizationRules()
 	{
-		if($action != 'error')
-		{
-			if(User::isLogin()) {
-				if(in_array($action, $this->autorization)) {
-					Redirect::to();
-				}
-			} else {
-				if(!in_array($action, $this->autorization)) {
-					Redirect::to('/user/login');
-				}
-			}
-		}
+		return [
+			'deny' => [
+				'users' => ['guest'],
+				'actions' => ['create', 'update', 'index'],
+			],
+		];
+		
 	}
 
 	public function actionCreate()

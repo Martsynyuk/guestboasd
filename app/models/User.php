@@ -33,7 +33,7 @@ class User extends Model
 		],
 	];
 	
-	public static function isLogin()
+	public static function isLoggedIn()
 	{	
 		if(!empty($_SESSION['id'])) {
 			return true;
@@ -46,7 +46,7 @@ class User extends Model
 		return $this->save([
 			'username' => $data['username'],
 			'email' => $data['email'],
-			'password' => md5($data['password'] . Config::get('md5/solt')),
+			'password' => md5($data['password'] . Config::get('md5/salt')),
 		]);
 	}
 	
@@ -54,10 +54,10 @@ class User extends Model
 	{
 		if(!empty($data['login']) && filter_var($data['login'], FILTER_VALIDATE_EMAIL)) {
 			$data['email'] = ['=', $data['login']];
-			$data['password'] = ['=', md5($data['password'] . Config::get('md5/solt'))];
+			$data['password'] = ['=', md5($data['password'] . Config::get('md5/salt'))];
 		} else {
 			$data['username'] = ['=', $data['login']];
-			$data['password'] = ['=', md5($data['password'] . Config::get('md5/solt'))];
+			$data['password'] = ['=', md5($data['password'] . Config::get('md5/salt'))];
 		}
 		unset($data['login']);
 		unset($data['submit']);
