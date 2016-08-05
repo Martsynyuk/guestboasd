@@ -5,7 +5,7 @@ echo '<ul>
 			<p>' . $content['body'] . '</p>
 			<p>latitude - ' . $content['lat'] . '</p>
 			<p>longitude - ' . $content['lng'] . '</p>
-	</ul>';
+	 </ul>';
 }
 ?>
 <a href="/post/my">my notation</a>

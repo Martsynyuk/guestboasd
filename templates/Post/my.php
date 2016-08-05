@@ -8,9 +8,10 @@ if(!empty($informations)) {
 				<p>longitude - ' . $content['lng'] . '</p>
 				<a href="/post/update/' . $content['id'] . '">Update</a>
 				<a href="/post/delete/' . $content['id'] . '">Delete</a>
-		</ul>';
+			</ul>';
 	}
-	echo '<a href="/">Home</a>';
+	echo '<a href="/post/create">Create</a>
+		  <a href="/">Home</a>';
 } else {
 	echo '<a href="/post/create">Create</a>
 		  <a href="/">Home</a>';

@@ -4,8 +4,8 @@
 	
 	<?= (isset($error['title'])) ? Helper::showErrors('title', $error) : '' ; ?>
 	
-	<p>text</p><textarea rows="5" cols="16" placeholder="input text" type="text" name="body" 
-		size="15"><?= (isset($informations['body'])) ? Helper::showText('body', $informations) : ''; ?></textarea>
+	<label>text<textarea rows="5" cols="16" placeholder="input text" type="text" name="body" 
+		size="15"><?= (isset($informations['body'])) ? Helper::showText('body', $informations) : ''; ?></textarea></label>
 	
 	<?= (isset($error['body'])) ? Helper::showErrors('body', $error) : '' ; ?>
 	
