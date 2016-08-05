@@ -6,12 +6,6 @@ class UserController extends Controller
 		'User',
 	];
 	
-	public function __construct($controller, $action, $params = [])
-	{
-		$this->autorization = $this->autorizationRules();
-		parent::__construct($controller, $action, $params = []);
-	}
-	
 	public function autorizationRules()
 	{
 		return [

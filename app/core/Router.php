@@ -25,7 +25,7 @@ class Router
 			
 			if(method_exists($controller, 'action' . ucfirst($this->action))) {
 				$action = 'action' . ucfirst($this->action);
-				$controller->$action();
+				$controller->$action($this->params);
 				$controller->display($this->action, $controller->layout);
 			} else {
 				$this->error('404');

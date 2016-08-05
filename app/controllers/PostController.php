@@ -6,12 +6,6 @@ class PostController extends Controller
 		'Post'
 	];
 	
-	public function __construct($controller, $action, $params = [])
-	{
-		$this->autorization = $this->autorizationRules();
-		parent::__construct($controller, $action, $params);
-	}
-	
 	public function autorizationRules()
 	{
 		return [
@@ -26,13 +20,10 @@ class PostController extends Controller
 
 	public function actionCreate()
 	{
+		$this->set('action', 'create');
+		
 		if(!empty($_POST)) {
-			if($this->Post->validate('create', $_POST) && $this->Post->save(['user_id' => User::getUserId(), 
-																			 'title' => $_POST['title'],
-																			 'body' => $_POST['body'],
-																			 'lat' => $_POST['lat'],
-																			 'lng' => $_POST['lng'],
-			])) {
+			if($this->Post->validate('default', $_POST) && $this->Post->savePost()) {
 				Redirect::to('/post/my');
 			} else {
 				$this->set('error', $this->Post->getErrors());
@@ -40,50 +31,43 @@ class PostController extends Controller
 		}
 	}
 
-	public function actionUpdate()
+	public function actionUpdate($id)
 	{
-		if(!isset($this->params[0])) {
+		if(!isset($id[0])) {
 			Redirect::to('/post/my');
 		}
+		
+		$this->set('action', 'update');
+		$this->set('id', $id[0]);
+		
 		if(!empty($_POST)) {
-			if($this->Post->validate('create', $_POST) && !empty($this->Post->find(['user_id' => ['=', User::getUserId()], 'id' => ['=', $this->params[0]]]))) {
-				$this->Post->save(['title' => $_POST['title'],
-		   						   'body' => $_POST['body'],
-								   'lat' => $_POST['lat'],
-								   'lng' => $_POST['lng'],
-								], 
-								['user_id' => ['=', User::getUserId()], 'id' => ['=', $this->params[0]]]);
+			if($this->Post->validate('default', $_POST) && !empty($this->Post->autorization($id[0]))) {
+				$this->Post->savePost($id[0]);
 				Redirect::to('/post/my');
 			} else {
-				$informations = $_POST;
-				$this->set('informations', $informations);
+				$this->set('posts', $_POST);
 				$this->set('error', $this->Post->getErrors());
-				$this->set('id', $this->params[0]);
 			}
 		} else {
-			$this->Post->find(['user_id' => ['=', User::getUserId()], 'id' => ['=', $this->params[0]]]);
-			$informations = $this->Post->getFirstResult();		
-			$this->set('informations', $informations);
-			$this->set('id', $this->params[0]);
+			$this->Post->findPosts($id[0]);	
+			$this->set('posts', $this->Post->getFirstResult());
 		}
 	}
 
 	public function actionIndex()
 	{
-		$informations = $this->Post->find();
-		$this->set('informations', $informations);
+		$this->set('posts', $this->Post->find());
 	}
 	
 	public function actionMy()
 	{
-		$informations = $this->Post->find(['user_id' => ['=', User::getUserId()]]);
-		$this->set('informations', $informations);
+		$this->set('posts', $this->Post->findPosts());
 	}
 	
-	public function actionDelete()
+	public function actionDelete($id)
 	{
-		if($this->Post->find(['user_id' => ['=', User::getUserId()], 'id' => ['=', $this->params[0]]])) {
-			$this->Post->deleteRecord(['user_id' => ['=', User::getUserId()], 'id' => ['=', $this->params[0]]]);
+		if($this->Post->findPosts($id[0])) {
+			var_dump($this->Post->deletePost($id[0]));
 			Redirect::to('/post/my');
 		} else {
 			Redirect::to('/user/logout');

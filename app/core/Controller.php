@@ -9,7 +9,8 @@ class Controller
 	protected $autorization = [];
 	
 	public function __construct($controller, $action, $params = [])
-	{
+	{	
+		$this->autorization = $this->autorizationRules();
 		$this->beforeAction($action);
 		$this->params = $params;
 		$this->view = new View($controller);		

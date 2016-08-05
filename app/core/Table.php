@@ -119,4 +119,9 @@ class Table
 		
 		return [$conditions, $values];
 	}
+	
+	public function getFirstResult()
+	{
+		return $this->db->getFirstResult();
+	}
 }

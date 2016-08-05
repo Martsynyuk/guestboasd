@@ -58,7 +58,7 @@ class Validation
 		if($rules) {
 			if(!is_numeric($value)) {
 				$this->validationPassed = false;
-				$this->errorInfo[$fieldName][] = 'mast be intiger';
+				$this->errorInfo[$fieldName][] = 'mast be number';
 			}
 		}
 	}
