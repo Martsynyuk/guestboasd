@@ -32,7 +32,7 @@ class Post extends Model
 		return $this->find(['user_id' => ['=', User::getUserId()]]);
 	}
 	
-	public function autorization($id)
+	public function isUserPost($id)
 	{
 		return $this->find(['user_id' => ['=', User::getUserId()], 'id' => ['=', $id]]);
 	}
@@ -41,26 +41,19 @@ class Post extends Model
 	{
 		return $this->deleteRecord(['user_id' => ['=', User::getUserId()], 'id' => ['=', $id]]);
 	}
-	
+
 	public function savePost($id = false)
 	{
-		if(!$id) {
-			return $this->save([
+		$where = [];
+		if($id) {
+			$where = ['user_id' => ['=', User::getUserId()], 'id' => ['=', $id]];
+		};
+		return $this->save([
 				'user_id' => User::getUserId(),
 				'title' => $_POST['title'],
 				'body' => $_POST['body'],
 				'lat' => $_POST['lat'],
 				'lng' => $_POST['lng'],
-			]);
-		}
-		return $this->save([
-				'title' => $_POST['title'],
-				'body' => $_POST['body'],
-				'lat' => $_POST['lat'],
-				'lng' => $_POST['lng'],
-				],
-				[
-				'user_id' => ['=', User::getUserId()], 'id' => ['=', $id]
-				]);
+			], $where);
 	}
 }

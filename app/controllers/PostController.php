@@ -41,7 +41,7 @@ class PostController extends Controller
 		$this->set('id', $id[0]);
 		
 		if(!empty($_POST)) {
-			if($this->Post->validate('default', $_POST) && !empty($this->Post->autorization($id[0]))) {
+			if($this->Post->validate('default', $_POST) && !empty($this->Post->isUserPost($id[0]))) {
 				$this->Post->savePost($id[0]);
 				Redirect::to('/post/my');
 			} else {
@@ -66,8 +66,8 @@ class PostController extends Controller
 	
 	public function actionDelete($id)
 	{
-		if($this->Post->findPosts($id[0])) {
-			var_dump($this->Post->deletePost($id[0]));
+		if($this->Post->isUserPost($id[0])) {
+			$this->Post->deletePost($id[0]);
 			Redirect::to('/post/my');
 		} else {
 			Redirect::to('/user/logout');
