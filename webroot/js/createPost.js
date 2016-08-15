@@ -23,6 +23,18 @@ if(document.readyState == 'complete') {
 }
 
 var createPost = {
+		
+	start: function() {
+		if(document.getElementById('lat').value == '' && document.getElementById('lng').value == '') {
+			 if(navigator.geolocation) {
+				 createPost.geolocation();
+			 } else {
+				 createPost.messageOpen('set marker manually');
+			 }
+		} else {
+			Markers.addMarker(parseFloat(document.getElementById('lat').value), parseFloat(document.getElementById('lng').value));
+		}
+	},
 
 	geolocation: function() {
 		if(navigator.geolocation.getCurrentPosition(function(position) {})) {
@@ -53,12 +65,4 @@ var createPost = {
 	}
 }
 
-if(document.getElementById('lat').value == '' && document.getElementById('lng').value == '') {
-	 if(navigator.geolocation) {
-		 createPost.geolocation();
-	 } else {
-		 createPost.messageOpen('set marker manually');
-	 }
-} else {
-	Markers.addMarker(parseFloat(document.getElementById('lat').value), parseFloat(document.getElementById('lng').value));
-}
+createPost.start();
