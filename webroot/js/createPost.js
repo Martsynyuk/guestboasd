@@ -1,32 +1,26 @@
 "use strict";
-$(document).ready(function() {
-
-	if($('#lat').val() == '' && $('#lng').val() == '') {
-		 if(navigator.geolocation) {
-			 createPost.geolocation();
-		 } else {
-			 createPost.messageOpen('set marker manually');
-		 }
-	} else {
-		Markers.addMarker(parseFloat($('#lat').val()), parseFloat($('#lng').val()));
-	}
-	
-	$('#message, #map').on('click', function(){
-		createPost.messageClose();
-	});
+if(document.readyState == 'complete') {
 	
 	Map.loadMap.addListener('click', function(event) {
+		createPost.messageClose();
 		Markers.clearMarker();
 		Markers.addMarker(event.latLng.lat(), event.latLng.lng());
-		$('#lat').val(event.latLng.lat());
-		$('#lng').val(event.latLng.lng());
+		document.getElementById('lat').value = event.latLng.lat();
+		document.getElementById('lng').value = event.latLng.lng();
 	});
+	document.getElementById('message').onclick = function() {
+		createPost.messageClose();
+	}
 	
-	$('#lat, #lng').on('change', function() {
+	document.getElementById('lat').onchange = function() {
 		createPost.messageClose();
 		createPost.newMarker();
-	});
-});
+	};
+	document.getElementById('lng').onchange = function() {
+		createPost.messageClose();
+		createPost.newMarker();
+	};
+}
 
 var createPost = {
 
@@ -43,18 +37,28 @@ var createPost = {
 	},
 	
 	messageOpen: function(text) {
-		$('#text').text(text);
-		$('#message').css('display', 'block');
+		document.getElementById('text').innerHTML = text;
+		document.getElementById('message').style.display = 'block';
 	},
 	
 	messageClose: function() {
-		$('#message').css('display', 'none');
+		document.getElementById('message').style.display = 'none';
 	},
 	
 	newMarker: function() {
-		if($('#lat').val() != '' && $('#lng').val() != '') {
+		if(document.getElementById('lat').value != '' && document.getElementById('lng').value != '') {
 			Markers.clearMarker();
-			Markers.addMarker(parseFloat($('#lat').val()), parseFloat($('#lng').val()));
+			Markers.addMarker(parseFloat(document.getElementById('lat').value), parseFloat(document.getElementById('lng').value));
 		}
 	}
+}
+
+if(document.getElementById('lat').value == '' && document.getElementById('lng').value == '') {
+	 if(navigator.geolocation) {
+		 createPost.geolocation();
+	 } else {
+		 createPost.messageOpen('set marker manually');
+	 }
+} else {
+	Markers.addMarker(parseFloat(document.getElementById('lat').value), parseFloat(document.getElementById('lng').value));
 }

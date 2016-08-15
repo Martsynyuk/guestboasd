@@ -1,7 +1,7 @@
 "use strict";
-$(document).ready(function() {
+if(document.readyState == 'complete') {
 	
-});
+}
 
 var Markers = {
 	markers: [],
