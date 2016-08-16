@@ -9,3 +9,4 @@ var Map = {
 				zoom: 6
 			}),
 }
+//document.addEventListener("DOMContentLoaded ", start());

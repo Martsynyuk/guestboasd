@@ -1,6 +1,6 @@
 "use strict";
 if(document.readyState == 'complete') {
-	
+
 }
 
 var Markers = {

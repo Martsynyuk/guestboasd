@@ -8,6 +8,7 @@ if(document.readyState == 'complete') {
 		document.getElementById('lat').value = event.latLng.lat();
 		document.getElementById('lng').value = event.latLng.lng();
 	});
+	
 	document.getElementById('message').onclick = function() {
 		createPost.messageClose();
 	}
@@ -23,7 +24,7 @@ if(document.readyState == 'complete') {
 }
 
 var createPost = {
-		
+
 	start: function() {
 		if(document.getElementById('lat').value == '' && document.getElementById('lng').value == '') {
 			 if(navigator.geolocation) {
@@ -47,7 +48,7 @@ var createPost = {
 			createPost.messageOpen('set marker manually');
 		}
 	},
-	
+
 	messageOpen: function(text) {
 		document.getElementById('text').innerHTML = text;
 		document.getElementById('message').style.display = 'block';
@@ -56,7 +57,7 @@ var createPost = {
 	messageClose: function() {
 		document.getElementById('message').style.display = 'none';
 	},
-	
+
 	newMarker: function() {
 		if(document.getElementById('lat').value != '' && document.getElementById('lng').value != '') {
 			Markers.clearMarker();
@@ -64,5 +65,4 @@ var createPost = {
 		}
 	}
 }
-
-createPost.start();
+document.addEventListener("DOMContentLoaded ", createPost.start());
