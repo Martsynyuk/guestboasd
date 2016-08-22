@@ -22,3 +22,6 @@
 		<div id="map" class="frame"></div>
 	</div>
 </div>
+<script>
+	requirejs(['main'], function () {});
+</script>

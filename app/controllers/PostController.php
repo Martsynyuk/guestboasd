@@ -20,7 +20,6 @@ class PostController extends Controller
 	public function actionCreate()
 	{
 		$this->set('action', 'create');
-		$this->set('script', 'post');
 		
 		if(!empty($_POST)) {
 			if($this->Post->validate('default', $_POST) && $this->Post->savePost()) {
@@ -37,7 +36,6 @@ class PostController extends Controller
 			Redirect::to('/post/my');
 		}
 		
-		$this->set('script', 'post');
 		$this->set('action', 'update');
 		$this->set('id', $id[0]);
 		

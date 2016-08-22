@@ -19,3 +19,6 @@
 		<div id="map" class="map frame"></div>	
 	</div>
 </div>
+<script>
+	requirejs(['main'], function () {});
+</script>
