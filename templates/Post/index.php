@@ -19,6 +19,4 @@
 		<div id="map" class="map frame"></div>	
 	</div>
 </div>
-<script>
-	requirejs(['main'], function () {});
-</script>
+<script type="text/javascript" src="/webroot/js/main.js"></script>

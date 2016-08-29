@@ -1,9 +1,9 @@
 "use strict";
 
 if(document.readyState == 'complete') {
-
+	
 }
-
+	
 var Map = {
 	markers: [],
 	loadMap: new google.maps.Map(document.getElementById('map'), {
@@ -15,7 +15,7 @@ var Map = {
 					position: {lat: lat, lng: lng},
 					map: Map.loadMap,
 			});	
-			Map.markers.push(marker);
+				Map.markers.push(marker);
 		},
 	clearMarker: function () {
 			if(Map.markers.length > 0) {
@@ -25,3 +25,5 @@ var Map = {
 			}
 		},
 }
+	
+

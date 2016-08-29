@@ -8,6 +8,3 @@
 		<a class="btn btn-inverse" href="/post/my">my notation</a>
 	</div>
 </div>
-<script>
-	requirejs(['createPost'], function () {});
-</script>

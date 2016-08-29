@@ -7,7 +7,5 @@
 		<a class="btn btn-inverse" href="/">Home</a>
 	</div>
 </div>
-<script>
-	requirejs(['createPost'], function () {});
-</script>
+
 	
