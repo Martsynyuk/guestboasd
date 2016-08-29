@@ -23,11 +23,11 @@ define('map', ['googleMaps'], function(){
 				}
 			},
 	}
+	return Map;
 });
 
 function func() {
-	require(['map'], function() {	
-	});
+	require(['map'], function() {});
 };
 setTimeout(func, 3000);
 

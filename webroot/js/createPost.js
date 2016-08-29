@@ -1,6 +1,6 @@
 "use strict";
 
-define('post', ['map'], function(){
+define('post', ['map'], function(Map){
 	
 	var createPost = {
 	
@@ -65,7 +65,13 @@ define('post', ['map'], function(){
 			}
 		}
 	}
-	document.addEventListener("DOMContentLoaded ", createPost.start());
-	
+	//document.addEventListener("DOMContentLoaded ", createPost.start());
 	return createPost;
 });
+
+function func() {
+	require(['post'], function(post) {
+	    post.start();
+	});
+};
+setTimeout(func, 3000);
