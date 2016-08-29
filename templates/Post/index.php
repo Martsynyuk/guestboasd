@@ -19,4 +19,4 @@
 		<div id="map" class="map frame"></div>	
 	</div>
 </div>
-<script type="text/javascript" src="/webroot/js/loadMap.js"></script>
+<script type="text/javascript" src="/webroot/js/main.js"></script>

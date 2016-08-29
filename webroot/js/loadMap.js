@@ -1,7 +1,6 @@
 "use strict";
-console.log('1');
+
 define('map', ['googleMaps'], function(){
-	console.log('2');
 
 	var Map = {
 		markers: [],

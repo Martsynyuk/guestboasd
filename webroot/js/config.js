@@ -7,9 +7,3 @@ requirejs.config({
     },
 });
 
-define('post', ['map'], function(){
-	return require(['createPost'], function() {
-		
-	});
-});
-
