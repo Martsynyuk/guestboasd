@@ -1,28 +1,5 @@
 "use strict";
 define('post', ['map'], function(){
-	if(document.readyState == 'complete') {
-		
-		Map.loadMap.addListener('click', function(event) {
-			createPost.messageClose();
-			Map.clearMarker();
-			Map.addMarker(event.latLng.lat(), event.latLng.lng());
-			document.getElementById('lat').value = event.latLng.lat();
-			document.getElementById('lng').value = event.latLng.lng();
-		});
-				
-		document.getElementById('message').onclick = function() {
-			createPost.messageClose();
-		}
-				
-		document.getElementById('lat').onchange = function() {
-			createPost.messageClose();
-			createPost.newMarker();
-		};
-		document.getElementById('lng').onchange = function() {
-			createPost.messageClose();
-			createPost.newMarker();
-		};
-	}
 	
 	var createPost = {
 	
@@ -36,6 +13,27 @@ define('post', ['map'], function(){
 			} else {
 				Map.addMarker(parseFloat(document.getElementById('lat').value), parseFloat(document.getElementById('lng').value));
 			}
+			
+			Map.loadMap.addListener('click', function(event) {
+				createPost.messageClose();
+				Map.clearMarker();
+				Map.addMarker(event.latLng.lat(), event.latLng.lng());
+				document.getElementById('lat').value = event.latLng.lat();
+				document.getElementById('lng').value = event.latLng.lng();
+			});
+					
+			document.getElementById('message').onclick = function() {
+				createPost.messageClose();
+			}
+					
+			document.getElementById('lat').onchange = function() {
+				createPost.messageClose();
+				createPost.newMarker();
+			};
+			document.getElementById('lng').onchange = function() {
+				createPost.messageClose();
+				createPost.newMarker();
+			};
 		},
 	
 		geolocation: function() {

@@ -1,7 +1,6 @@
 "use strict";
 
 define('map', ['googleMaps'], function(){
-
 	var Map = {
 		markers: [],
 		loadMap: new google.maps.Map(document.getElementById('map'), {
