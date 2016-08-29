@@ -21,5 +21,3 @@
 </div>
 <script type="text/javascript" src="/webroot/js/loadMap.js"></script>
 
-
-
