@@ -7,11 +7,6 @@ requirejs.config({
     },
 });
 
-define('map', ['googleMaps'], function(){
-	return require(['loadMap'], function() {
-		
-	});
-});
 define('post', ['map'], function(){
 	return require(['createPost'], function() {
 		
