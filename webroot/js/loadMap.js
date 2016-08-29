@@ -2,10 +2,7 @@
 console.log('1');
 define('map', ['googleMaps'], function(){
 	console.log('2');
-	if(document.readyState == 'complete') {
-			
-	}
-		
+
 	var Map = {
 		markers: [],
 		loadMap: new google.maps.Map(document.getElementById('map'), {
@@ -27,6 +24,7 @@ define('map', ['googleMaps'], function(){
 				}
 			},
 	}
+	return Map;
 });
 
 	
