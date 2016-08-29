@@ -1,2 +1,3 @@
 require(['post'], function() {
+	
 });

@@ -1,4 +1,5 @@
 "use strict";
+
 define('post', ['map'], function(){
 	
 	var createPost = {

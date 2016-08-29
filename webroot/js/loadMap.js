@@ -1,6 +1,7 @@
 "use strict";
 
 define('map', ['googleMaps'], function(){
+
 	var Map = {
 		markers: [],
 		loadMap: new google.maps.Map(document.getElementById('map'), {
@@ -22,8 +23,14 @@ define('map', ['googleMaps'], function(){
 				}
 			},
 	}
-	return Map;
 });
+
+function func() {
+	require(['map'], function() {	
+	});
+};
+setTimeout(func, 3000);
+
 
 	
 

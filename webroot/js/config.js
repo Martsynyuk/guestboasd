@@ -7,3 +7,9 @@ requirejs.config({
     },
 });
 
+define('map', ['googleMaps'], function(){
+	return require(['loadMap'], function() {
+		
+	});
+});
+
