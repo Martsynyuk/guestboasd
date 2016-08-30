@@ -1,6 +1,6 @@
 "use strict";
 
-//require(['googleMaps'], function(){
+require(['async!googleMaps'], function(){
 	var Map = {
 		markers: [],
 		loadMap: new google.maps.Map(document.getElementById('map'), {
@@ -22,7 +22,7 @@
 				}
 			},
 	}
-//});
+});
 
 	
 

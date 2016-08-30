@@ -19,6 +19,6 @@
 		<div id="map" class="map frame"></div>	
 	</div>
 </div>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMgnsp7HMAHLR_ntjubgpnt3A8evQvsgg"></script>
+
 <script type="text/javascript" src="/webroot/js/loadMap.js"></script>
 
