@@ -3,6 +3,7 @@ define(['./loadMap.js'], function(Map) {
 	var createAllMarkers = {
 		map: Map.init(),
 		post: JSON.parse(posts.dataset.post),
+		
 		start: function() {
 			createAllMarkers.addMarkers();
 		},
@@ -43,7 +44,7 @@ define(['./loadMap.js'], function(Map) {
 			});
 			
 			markers.addListener('click', function() {
-			    infowindow.open(markers.get('createAllMarkers.'), markers);
+			    infowindow.open(createAllMarkers.map, markers);
 			});
 		}
 	}
