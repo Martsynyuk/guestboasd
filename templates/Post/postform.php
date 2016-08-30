@@ -43,4 +43,5 @@
 		<input class="submit btn btn-inverse" type="submit" name="submit" value="submit">
 	</div>
 </form>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMgnsp7HMAHLR_ntjubgpnt3A8evQvsgg"></script>
 <script type="text/javascript" src="/webroot/js/createPost.js"></script>
