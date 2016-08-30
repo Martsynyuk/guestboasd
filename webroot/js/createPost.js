@@ -1,7 +1,6 @@
 define(['./loadMap.js'], function(Map){
 	var map;
 	var createPost = {
-		map: null,
 		start: function() {
 			map = Map.init();
 			if(document.getElementById('lat').value == '' && document.getElementById('lng').value == '') {

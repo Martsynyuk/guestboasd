@@ -19,4 +19,5 @@
 		<div id="map" class="map frame"></div>	
 	</div>
 </div>
+<div id="posts" data-post='<?= !empty($posts) ? json_encode($posts) : '' ; ?>'></div>
 <script src="/webroot/js/require.js" data-main="/webroot/js/index.js"></script>

@@ -13,6 +13,7 @@ define(['googleMaps'], function(){
 				map: map
 			});
 			markers.push(marker);
+			return marker;
 		},
 		clearMarker: function () {
 			if(markers.length > 0) {
@@ -20,6 +21,12 @@ define(['googleMaps'], function(){
 					markers[i].setMap(null);
 				}
 			}
+		},
+		infoWindows: function(content) {
+			var infowindow = new google.maps.InfoWindow({
+			    content: content,
+			});
+			return infowindow;
 		}
 	};
 });
