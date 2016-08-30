@@ -54,7 +54,7 @@ class PostController extends Controller
 	}
 
 	public function actionIndex()
-	{
+	{ 
 		$this->set('posts', $this->Post->find());
 	}
 	

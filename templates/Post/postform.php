@@ -43,4 +43,4 @@
 		<input class="submit btn btn-inverse" type="submit" name="submit" value="submit">
 	</div>
 </form>
-<script type="text/javascript" src="/webroot/js/createPost.js"></script>
+<script src="/webroot/js/require.js" data-main="/webroot/js/createPost.js"></script>

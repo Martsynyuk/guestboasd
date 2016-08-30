@@ -8,8 +8,16 @@
 <title>guestboard</title>
 <link rel="stylesheet" type="text/css" href="/webroot/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/webroot/css/main.css">
+	
+<script>
+	var require = {
+		baseUrl: '/webroot/js',
+		paths: {
+			googleMaps: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDMgnsp7HMAHLR_ntjubgpnt3A8evQvsgg'
+		}
+	}
+</script>
 
-<script type="text/javascript" data-main="/webroot/js/config.js" src="/webroot/js/require.js"></script>
 
 </head>
 <body>

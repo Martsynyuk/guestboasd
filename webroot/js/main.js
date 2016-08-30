@@ -1,4 +1,0 @@
-require(['map'], function() {
-	
-});
-
