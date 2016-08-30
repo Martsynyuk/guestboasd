@@ -28,11 +28,11 @@ CREATE TABLE `post` (
   `lat` decimal(20,15) NOT NULL,
   `lng` decimal(20,15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 /*Data for the table `post` */
 
-insert  into `post`(`id`,`user_id`,`title`,`body`,`lat`,`lng`) values (13,17,'news','news create','51.761914853084540','33.390820312500000'),(14,18,'one','asds asdasd asd asdasd asdasd dasdas ','49.000000015455500','26.000415445000000'),(15,17,'topic','test topic !','51.013754657188215','29.575195312500000'),(16,17,'text','new text','50.401515322782366','33.310546875000000'),(17,17,'topic','new topic with text','50.035973672195496','27.465820312500000'),(18,17,'topic','test','48.893615361480194','29.509277343750000');
+insert  into `post`(`id`,`user_id`,`title`,`body`,`lat`,`lng`) values (13,17,'news','news create','51.761914853084540','33.390820312500000'),(14,18,'one','asds asdasd asd asdasd asdasd dasdas ','49.000000015455500','26.000415445000000'),(15,17,'topic','test topic !','51.013754657188215','29.575195312500000'),(16,17,'text','new text','50.401515322782366','33.310546875000000'),(17,17,'topic','new topic with text','50.035973672195496','27.465820312500000'),(18,17,'topic','test','48.893615361480194','29.509277343750000'),(19,17,'16.08.2016','new day','48.574789910928864','29.750976562500000');
 
 /*Table structure for table `users` */
 
