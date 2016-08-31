@@ -39,9 +39,7 @@ define(['./loadMap.js'], function(Map) {
 		},
 		
 		eventsOnMarkers: function(markers, content) {
-			var infowindow = new google.maps.InfoWindow({
-			    content: content
-			});
+			var infowindow = Map.infoWindows(content);
 			
 			markers.addListener('click', function() {
 			    infowindow.open(createAllMarkers.map, markers);
