@@ -1,8 +1,10 @@
-define(['./loadMap.js'], function(Map) {
+define(['./loadMap.js', 'mustache'], function(Map, mustache) {
 
 	var createAllMarkers = {
+			
 		map: Map.init(),
 		post: JSON.parse(posts.dataset.post),
+		content: '<div style="color: black;" class="wininfo"><div class="title">{{title}}</div><div class="text">{{body}}</div></div>',
 		
 		start: function() {
 			createAllMarkers.addMarkers();
@@ -15,29 +17,18 @@ define(['./loadMap.js'], function(Map) {
 			var content = null;
 			
 			for(var i = 0; i < createAllMarkers.post.length; i++) {	
+				
 				points.push({'lat': parseFloat(createAllMarkers.post[i]['lat']), 'lng': parseFloat(createAllMarkers.post[i]['lng'])});			
 				markers = Map.addMarker(createAllMarkers.map, parseFloat(createAllMarkers.post[i]['lat']), parseFloat(createAllMarkers.post[i]['lng']));
 				
-				content = '<div style="color: black;" class="wininfo">'+ 
-							'<div class="title">'+ createAllMarkers.post[i]['title'] +
-							'<div class="text">' + createAllMarkers.post[i]['body'] +
-							'</div>'+
-							'</div>'+
-							'</div>';
-				
-				createAllMarkers.eventsOnMarkers(markers, content);
+				createAllMarkers.eventsOnMarkers(markers, 
+												mustache.render(createAllMarkers.content, 
+														{title: createAllMarkers.post[i]['title'], body: createAllMarkers.post[i]['body']})
+												);
 			}
-			createAllMarkers.centeringMap(points);
+			Map.centeringMap(points, createAllMarkers.map);
 		},
-		
-		centeringMap: function(points) {
-			var latlngbounds = new google.maps.LatLngBounds();
-			for ( var i = 0; i < points.length; i++ ){
-			     latlngbounds.extend(points[i]);
-			}
-			createAllMarkers.map.setCenter( latlngbounds.getCenter(), createAllMarkers.map.fitBounds(latlngbounds));
-		},
-		
+
 		eventsOnMarkers: function(markers, content) {
 			var infowindow = Map.infoWindows(content);
 			

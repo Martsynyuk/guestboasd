@@ -27,6 +27,13 @@ define(['googleMaps'], function(){
 			    content: content,
 			});
 			return infowindow;
+		},
+		centeringMap: function(points, map) {
+			var latlngbounds = new google.maps.LatLngBounds();
+			for ( var i = 0; i < points.length; i++ ){
+			     latlngbounds.extend(points[i]);
+			}
+			map.setCenter( latlngbounds.getCenter(), map.fitBounds(latlngbounds));
 		}
 	};
 });
