@@ -30,6 +30,11 @@ class PostController extends Controller
 		}
 	}
 
+	public function actionTest()
+	{
+
+	}
+
 	public function actionUpdate($id)
 	{
 		if(!isset($id[0])) {

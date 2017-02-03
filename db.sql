@@ -2,8 +2,7 @@
 SQLyog Community v12.09 (64 bit)
 MySQL - 5.5.23 : Database - guestboard
 *********************************************************************
-*/
-
+*/
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;

@@ -16,7 +16,7 @@ define(['./loadMap.js'], function(Map){
 			google.maps.event.addListener(map, 'click', function(event) {
 				createPost.messageClose();
 				Map.clearMarker();
-				Map.addMarker(map, event.latLng.lat(), event.latLng.lng());
+				Map.addMarker(map, event.latLng.lat(), event.latLng.lng()); // return cords where market create
 				document.getElementById('lat').value = event.latLng.lat();
 				document.getElementById('lng').value = event.latLng.lng();
 			});

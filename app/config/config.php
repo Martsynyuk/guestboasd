@@ -4,7 +4,7 @@ session_start();
 $settings = [
 	'database' => [
 		'driver' => 'MySQL',
-		'host' => 'localhost',
+		'host' => 'guest:3307',
 		'dbname' => 'guestboard',
 		'user' => 'root',
 		'password' => ''

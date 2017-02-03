@@ -19,8 +19,8 @@ class Router
 	
 	public function run()
 	{
-		if(class_exists($this->controller . 'Controller')) {
-			$controller = $this->controller . 'Controller';
+		if(class_exists(ucfirst($this->controller) . 'Controller')) {
+			$controller = ucfirst($this->controller) . 'Controller';
 			$controller = new $controller($this->controller, $this->action, $this->params);
 			
 			if(method_exists($controller, 'action' . ucfirst($this->action))) {

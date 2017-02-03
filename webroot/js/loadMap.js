@@ -4,7 +4,7 @@ define(['googleMaps'], function(){
 		init: function(){
 			return new google.maps.Map(document.getElementById('map'), {
 				center: {lat: 49.007073, lng: 30.2600184},
-				zoom: 6
+				zoom: 6,
 			});
 		},
 		addMarker: function (map, lat, lng) {

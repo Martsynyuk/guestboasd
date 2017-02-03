@@ -9,7 +9,7 @@ class View
 	
 	public function __construct($workingFolder)
 	{	
-		$this->workingFolder = $workingFolder;
+		$this->workingFolder = ucfirst($workingFolder);
 	}
 	public function set($name, $value)
 	{
@@ -25,15 +25,19 @@ class View
 	}
 	public function render($template, $layout)
 	{
+		$template = lcfirst($template);
+		$layout = lcfirst($layout);
+
 		ob_start();
 		extract($this->data);
+
 		if (file_exists($this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension)) {
 			include_once $this->templatesRoot . '/' . $this->workingFolder . '/' . $template . $this->extension;
 		}
 		$content = ob_get_clean();
 		
 		$this->set('content', $content);
-		
+
 		ob_start();
 		extract($this->data);
 		if (file_exists($this->templatesRoot . '/layouts/' . $layout . $this->extension)) {
