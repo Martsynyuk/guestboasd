@@ -13,7 +13,7 @@
 	var require = {
 		baseUrl: '/webroot/js',
 		paths: {
-			googleMaps: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDMgnsp7HMAHLR_ntjubgpnt3A8evQvsgg'
+			googleMaps: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDMgnsp7HMAHLR_ntjubgpnt3A8evQvsgg&libraries=geometry'
 		}
 	}
 </script>
