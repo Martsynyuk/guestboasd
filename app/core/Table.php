@@ -23,19 +23,23 @@ class Table
 	public function get($table, $where, $limit = [], $order = [])
 	{
 		$result = [];
+
 		if($this->action("SELECT *", $table, $where, $limit, $order)){
 			$result = $this->db->getResults();
 		}
+
 		return $result;
 	}
 
 	public function getAll($table)
 	{
 		$result = [];
+
 		$sql = "SELECT * FROM $table";
 		if($this->db->executeQuery($sql)){
 			$result = $this->db->getResults();
 		}
+
 		return $result;
 	}
 
@@ -48,13 +52,14 @@ class Table
 	{	
 		if(empty($data)) {
 			return false;	
-		}	
+		}
+
 		$value = '';
 		
-		foreach($data as $val)
-		{
+		foreach($data as $val) {
 			$value .= '?, ';
 		}
+
 		$sql = "INSERT INTO $table (" . implode(', ', array_keys($data)) . ") VALUES (" . rtrim($value, ', ') . ")";
 
 		return $this->db->executeQuery($sql, $data);
@@ -65,6 +70,7 @@ class Table
 		if(empty($data) || empty($where)) {
 			return false;	
 		}
+
 		$condition = $this->conditions($where);	
 		list($conditions, $values) = $condition;
 	
@@ -86,11 +92,11 @@ class Table
 		$orderStr = '';		
 		list($conditions, $values) = $condition;
 		
-		if(in_array(count($limit), [1, 2])){
+		if(in_array(count($limit), [1, 2])) {
 			$limitStr = 'LIMIT ' . implode(', ', $limit);
 		}
 
-		if(!empty($order)){
+		if(!empty($order)) {
 			$orderStr = 'ORDER BY ' . implode(', ', $order);
 		}
 		$sql = "$action FROM $table WHERE $conditions $orderStr $limitStr";
@@ -102,6 +108,7 @@ class Table
 		if(empty($where)) {
 			return [$conditions = '', $values = []];
 		}
+
 		$operations = ['=', '>', '<', '>=', '<='];
 		$conditions = [];
 		$values = [];
@@ -115,6 +122,7 @@ class Table
 				$values[] = $value[1];
 			}
 		}
+
 		$conditions = implode(' AND ', $conditions);
 		
 		return [$conditions, $values];

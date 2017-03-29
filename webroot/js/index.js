@@ -22,9 +22,9 @@ define(['./loadMap.js', 'mustache'], function(Map, mustache) {
 				markers = Map.addMarker(createAllMarkers.map, parseFloat(createAllMarkers.post[i]['lat']), parseFloat(createAllMarkers.post[i]['lng']));
 				
 				createAllMarkers.eventsOnMarkers(markers, 
-												mustache.render(createAllMarkers.content, 
-														{title: createAllMarkers.post[i]['title'], body: createAllMarkers.post[i]['body']})
-												);
+					mustache.render(createAllMarkers.content,
+						{title: createAllMarkers.post[i]['title'], body: createAllMarkers.post[i]['body']})
+				);
 			}
 			Map.centeringMap(points, createAllMarkers.map);
 		},
@@ -36,6 +36,7 @@ define(['./loadMap.js', 'mustache'], function(Map, mustache) {
 			    infowindow.open(createAllMarkers.map, markers);
 			});
 		}
-	}
+	};
+
 	return createAllMarkers.start();
 });

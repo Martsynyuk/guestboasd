@@ -63,6 +63,5 @@ class MySQLDriver implements DatabaseInterface
 	public function getFirstResult()
 	{
 		return $this->result[0];
-
 	}
 }
